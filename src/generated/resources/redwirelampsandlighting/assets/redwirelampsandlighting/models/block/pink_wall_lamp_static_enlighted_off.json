@@ -1,0 +1,8 @@
+{
+  "parent": "redwirelampsandlighting:generation/wall_lamp_off",
+  "textures": {
+    "1": "redwirelampsandlighting:block/pink_lamp_block",
+    "2": "redwirelampsandlighting:block/wall_lamp",
+    "particle": "redwirelampsandlighting:block/pink_lamp_block"
+  }
+}

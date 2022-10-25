@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:purple_lamp_block_dyed_light_gray_lamp_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_x": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redwirelampsandlighting:purple_lamp_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_x",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:purple_lamp_block_dyed_light_gray_lamp_block"
+    ]
+  }
+}

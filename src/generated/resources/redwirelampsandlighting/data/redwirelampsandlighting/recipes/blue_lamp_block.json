@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:glass_pane"
+    },
+    "b": {
+      "item": "minecraft:blue_dye"
+    },
+    "c": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "d": {
+      "item": "redwirelampsandlighting:luminous_dust"
+    }
+  },
+  "pattern": [
+    "aba",
+    "aca",
+    "ada"
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:blue_lamp_block"
+  }
+}

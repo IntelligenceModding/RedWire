@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:blue_wall_lamp_static"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:blue_wall_lamp"
+  }
+}

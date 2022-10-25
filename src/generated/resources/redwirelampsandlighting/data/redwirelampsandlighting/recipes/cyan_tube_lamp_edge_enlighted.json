@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "redwirelampsandlighting:cyan_lamp_block_enlighted"
+    }
+  },
+  "pattern": [
+    "   ",
+    "aa ",
+    "a  "
+  ],
+  "result": {
+    "count": 16,
+    "item": "redwirelampsandlighting:cyan_tube_lamp_edge_enlighted"
+  }
+}

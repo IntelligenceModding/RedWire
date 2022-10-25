@@ -1,0 +1,7 @@
+{
+  "parent": "redwirecore:generation/wireless_controller_on",
+  "textures": {
+    "0": "redwirecore:block/wireless_controller_on",
+    "particle": "redwirecore:block/wireless_controller_on"
+  }
+}

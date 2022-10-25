@@ -1,0 +1,192 @@
+{
+  "variants": {
+    "face=ceiling,facing=east,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=east,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=east,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=ceiling,facing=east,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=ceiling,facing=north,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=north,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=north,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=ceiling,facing=north,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=ceiling,facing=south,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=south,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=south,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=ceiling,facing=south,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=ceiling,facing=west,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=west,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 180
+    },
+    "face=ceiling,facing=west,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=ceiling,facing=west,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 180
+    },
+    "face=floor,facing=east,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=east,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=east,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=floor,facing=east,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=floor,facing=north,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=north,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=north,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=floor,facing=north,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=floor,facing=south,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=south,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=south,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=floor,facing=south,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=floor,facing=west,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=west,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off"
+    },
+    "face=floor,facing=west,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=floor,facing=west,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on"
+    },
+    "face=wall,facing=east,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=east,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90,
+      "y": 90
+    },
+    "face=wall,facing=north,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90
+    },
+    "face=wall,facing=north,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90
+    },
+    "face=wall,facing=north,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90
+    },
+    "face=wall,facing=north,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90
+    },
+    "face=wall,facing=south,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=south,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90,
+      "y": 180
+    },
+    "face=wall,facing=west,lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_off",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90,
+      "y": 270
+    },
+    "face=wall,facing=west,lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/black_gulp_lamp_static_on",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

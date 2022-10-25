@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:cyan_wall_lamp_enlighted"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:cyan_wall_lamp"
+  }
+}

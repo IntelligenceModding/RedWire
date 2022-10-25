@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:magenta_lamp_button_trigger"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:magenta_lamp_button"
+  }
+}

@@ -1,0 +1,4 @@
+// 1.19.2	2022-10-22T23:14:20.7284263	Block States: redwirecore
+00e76f38679c88edfc6ac0de61daa63e7fc6ad4d assets/redwirecore/blockstates/wireless_lamp_controller.json
+3b0c2ad2bff41d07fc3350639e3a7303d0e3cf6b assets/redwirecore/models/block/wireless_lamp_controller_off.json
+e308146fd424358e6ad2286f93d85b1ffb5ecd1d assets/redwirecore/models/block/wireless_lamp_controller_on.json

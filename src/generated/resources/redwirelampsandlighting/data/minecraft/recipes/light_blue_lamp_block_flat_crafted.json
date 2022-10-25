@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:iron_ingot"
+    },
+    "b": {
+      "item": "redwirelampsandlighting:light_blue_lamp_block"
+    }
+  },
+  "pattern": [
+    "aba"
+  ],
+  "result": {
+    "count": 12,
+    "item": "redwirelampsandlighting:light_blue_lamp_block_flat"
+  }
+}

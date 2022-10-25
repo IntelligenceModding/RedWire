@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/redstone_lamp",
+  "textures": {
+    "all": "minecraft:block/shroomlight"
+  }
+}

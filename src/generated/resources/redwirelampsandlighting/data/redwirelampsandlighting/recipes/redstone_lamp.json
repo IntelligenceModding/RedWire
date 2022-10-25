@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:redstone_lamp"
+    },
+    "b": {
+      "item": "minecraft:glass_pane"
+    },
+    "c": {
+      "item": "redwirelampsandlighting:luminous_dust"
+    }
+  },
+  "pattern": [
+    "bbb",
+    "bab",
+    "bcb"
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:redstone_lamp"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "lit=false,remoted=false": {
+      "model": "redwirelampsandlighting:block/glowstone_lamp_off"
+    },
+    "lit=false,remoted=true": {
+      "model": "redwirelampsandlighting:block/glowstone_lamp_off"
+    },
+    "lit=true,remoted=false": {
+      "model": "redwirelampsandlighting:block/glowstone_lamp_on"
+    },
+    "lit=true,remoted=true": {
+      "model": "redwirelampsandlighting:block/glowstone_lamp_on"
+    }
+  }
+}

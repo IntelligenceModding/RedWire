@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "redwirelampsandlighting:block/light_gray_lamp_block"
+    },
+    "lit=true": {
+      "model": "redwirelampsandlighting:block/light_gray_lamp_block_on"
+    }
+  }
+}

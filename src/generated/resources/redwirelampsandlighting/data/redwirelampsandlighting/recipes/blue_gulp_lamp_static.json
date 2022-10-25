@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "redwirelampsandlighting:blue_gulp_lamp"
+    },
+    "b": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:blue_gulp_lamp_static"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "redwirecore:block/wireless_lamp_controller_off"
+    },
+    "powered=true": {
+      "model": "redwirecore:block/wireless_lamp_controller_on"
+    }
+  }
+}

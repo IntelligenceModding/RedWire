@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "redwirelampsandlighting:green_lamp_block_enlighted"
+    }
+  },
+  "pattern": [
+    "   ",
+    "aa ",
+    "a  "
+  ],
+  "result": {
+    "count": 16,
+    "item": "redwirelampsandlighting:green_tube_lamp_edge_enlighted"
+  }
+}

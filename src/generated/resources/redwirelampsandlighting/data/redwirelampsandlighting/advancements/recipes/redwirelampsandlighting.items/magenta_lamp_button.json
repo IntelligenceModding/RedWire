@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "redwirelampsandlighting:magenta_lamp_button"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_x": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redwirelampsandlighting:magenta_lamp_block"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_x",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "redwirelampsandlighting:magenta_lamp_button"
+    ]
+  }
+}

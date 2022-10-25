@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "redwirelampsandlighting:magenta_lamp_block"
+    }
+  },
+  "pattern": [
+    "   ",
+    "aa ",
+    "a  "
+  ],
+  "result": {
+    "count": 16,
+    "item": "redwirelampsandlighting:magenta_tube_lamp_edge"
+  }
+}

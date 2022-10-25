@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:red_lamp_button_toggle"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:red_lamp_button_trigger"
+  }
+}

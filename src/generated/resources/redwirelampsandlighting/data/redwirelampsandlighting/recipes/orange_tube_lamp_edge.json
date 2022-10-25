@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "redwirelampsandlighting:orange_lamp_block"
+    }
+  },
+  "pattern": [
+    "   ",
+    "aa ",
+    "a  "
+  ],
+  "result": {
+    "count": 16,
+    "item": "redwirelampsandlighting:orange_tube_lamp_edge"
+  }
+}

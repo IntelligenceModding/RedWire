@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:light_gray_wall_lamp_dyed_green_wall_lamp"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_x": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redwirelampsandlighting:light_gray_wall_lamp"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_x",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:light_gray_wall_lamp_dyed_green_wall_lamp"
+    ]
+  }
+}

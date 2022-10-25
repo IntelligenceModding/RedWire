@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:redstone"
+    },
+    "b": {
+      "item": "minecraft:redstone_torch"
+    },
+    "c": {
+      "item": "minecraft:observer"
+    },
+    "d": {
+      "item": "minecraft:repeater"
+    },
+    "e": {
+      "item": "minecraft:comparator"
+    },
+    "f": {
+      "item": "minecraft:redstone_lamp"
+    }
+  },
+  "pattern": [
+    "  b",
+    "aca",
+    "def"
+  ],
+  "result": {
+    "item": "redwirecore:linking_card"
+  }
+}

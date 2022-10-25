@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "redwirelampsandlighting:red_lamp_block"
+    },
+    "b": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    "a",
+    "b"
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:red_lamp_block_static"
+  }
+}

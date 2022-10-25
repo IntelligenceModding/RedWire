@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "redwirelampsandlighting:block/light_gray_lamp_block"
+  }
+}

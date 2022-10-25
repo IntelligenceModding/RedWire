@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:shroomlight"
+    },
+    "b": {
+      "item": "minecraft:glass_pane"
+    },
+    "c": {
+      "item": "redwirelampsandlighting:luminous_dust"
+    }
+  },
+  "pattern": [
+    "bbb",
+    "bab",
+    "bcb"
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:shroomlight_lamp"
+  }
+}

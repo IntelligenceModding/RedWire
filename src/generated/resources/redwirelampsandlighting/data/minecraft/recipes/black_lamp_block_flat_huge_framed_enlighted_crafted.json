@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:iron_ingot"
+    },
+    "b": {
+      "item": "redwirelampsandlighting:black_lamp_block_enlighted"
+    },
+    "c": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "caa",
+    "aba",
+    "aac"
+  ],
+  "result": {
+    "count": 12,
+    "item": "redwirelampsandlighting:black_lamp_block_flat_huge_framed_enlighted"
+  }
+}

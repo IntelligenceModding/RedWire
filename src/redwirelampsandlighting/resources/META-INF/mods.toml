@@ -1,0 +1,33 @@
+modLoader = "javafml"
+loaderVersion = "[43,)"
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "redwirelampsandlighting"
+version = "1.0r"
+displayName = "RedWire: Lamps and Lighting"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/redwire-lamps-and-lighting"
+logoFile = "logo.png"
+authors = "UnhappyWithoutU"
+description = "Additional mod for RedWire, adding lots of lamps and lighting sources!"
+
+[[dependencies.redwirelampsandlighting]]
+modId = "forge"
+mandatory = true
+versionRange = "[43,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.redwirelampsandlighting]]
+modId = "redwirecore"
+mandatory = true
+versionRange = "[1.0,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.redwirelampsandlighting]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.19.2,1.20)"
+ordering = "NONE"
+side = "BOTH"

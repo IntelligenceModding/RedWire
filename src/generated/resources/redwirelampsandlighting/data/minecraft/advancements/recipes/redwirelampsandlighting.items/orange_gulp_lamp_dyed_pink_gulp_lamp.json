@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:orange_gulp_lamp_dyed_pink_gulp_lamp"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_x": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "redwirelampsandlighting:orange_gulp_lamp"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_x",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:orange_gulp_lamp_dyed_pink_gulp_lamp"
+    ]
+  }
+}

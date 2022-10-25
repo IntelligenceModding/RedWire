@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "lampsandlighting:block/limestone_block_smooth_fair_lever"
+  }
+}

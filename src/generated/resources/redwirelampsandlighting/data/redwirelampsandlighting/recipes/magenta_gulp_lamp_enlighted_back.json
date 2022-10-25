@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:magenta_gulp_lamp_enlighted"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:magenta_gulp_lamp"
+  }
+}

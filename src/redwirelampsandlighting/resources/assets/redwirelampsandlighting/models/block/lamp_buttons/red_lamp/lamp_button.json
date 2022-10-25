@@ -1,0 +1,91 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "0": "redwirelampsandlighting:block/red_lamp_block",
+    "particle": "redwirelampsandlighting:block/red_lamp_block"
+  },
+  "elements": [
+    {
+      "from": [
+        5,
+        0,
+        6
+      ],
+      "to": [
+        11,
+        2,
+        10
+      ],
+      "shade": false,
+      "rotation": {
+        "angle": 0,
+        "axis": "x",
+        "origin": [
+          8,
+          9,
+          14.455
+        ]
+      },
+      "faces": {
+        "north": {
+          "uv": [
+            5,
+            4,
+            11,
+            6
+          ],
+          "rotation": 180,
+          "texture": "#0"
+        },
+        "east": {
+          "uv": [
+            3,
+            6,
+            5,
+            10
+          ],
+          "rotation": 270,
+          "texture": "#0"
+        },
+        "south": {
+          "uv": [
+            5,
+            10,
+            11,
+            12
+          ],
+          "texture": "#0"
+        },
+        "west": {
+          "uv": [
+            11,
+            6,
+            13,
+            10
+          ],
+          "rotation": 90,
+          "texture": "#0"
+        },
+        "up": {
+          "uv": [
+            5,
+            6,
+            11,
+            10
+          ],
+          "rotation": 180,
+          "texture": "#0"
+        },
+        "down": {
+          "uv": [
+            5,
+            6,
+            11,
+            10
+          ],
+          "texture": "#0"
+        }
+      }
+    }
+  ]
+}

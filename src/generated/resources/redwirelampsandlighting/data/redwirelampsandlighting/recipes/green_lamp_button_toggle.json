@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:green_lamp_button"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:green_lamp_button_toggle"
+  }
+}

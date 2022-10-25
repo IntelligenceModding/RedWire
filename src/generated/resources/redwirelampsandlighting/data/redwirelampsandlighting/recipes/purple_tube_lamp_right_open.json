@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:purple_tube_lamp_left_open"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:purple_tube_lamp_right_open"
+  }
+}

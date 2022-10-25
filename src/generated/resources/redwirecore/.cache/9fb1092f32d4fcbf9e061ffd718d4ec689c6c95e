@@ -1,0 +1,7 @@
+// 1.19.2	2022-10-25T22:55:58.5339271	Recipes
+2343245fc3b3c95983013285522ce7f21a6ac627 data/minecraft/advancements/recipes/redwirecore.items/linking_card_from_self.json
+2959ebaf42c074089ea6a9700778f62113105de1 data/minecraft/recipes/linking_card_from_self.json
+e0ee91044068b6b363ee9280f921496e1796f2e8 data/redwirecore/advancements/recipes/redwirecore.items/linking_card.json
+f169d4c995f61f67bc25eb3dbdf2842c5265f862 data/redwirecore/advancements/recipes/redwirecore.items/wireless_lamp_controller.json
+05c3440794328123efee541d1b432335bec3bf2f data/redwirecore/recipes/linking_card.json
+fce7a382cf56008e534850edb355a5f02c630822 data/redwirecore/recipes/wireless_lamp_controller.json

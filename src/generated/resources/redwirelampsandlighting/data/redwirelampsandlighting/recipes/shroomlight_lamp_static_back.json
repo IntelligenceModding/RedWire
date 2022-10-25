@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:shroomlight_lamp_static"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:shroomlight_lamp"
+  }
+}

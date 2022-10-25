@@ -1,0 +1,9 @@
+{
+  "parent": "redwirelampsandlighting:generation/gulp_lamp",
+  "textures": {
+    "0": "redwirelampsandlighting:block/wall_lamp",
+    "1": "redwirelampsandlighting:block/blue_lamp_block_on",
+    "2": "redwirelampsandlighting:block/blue_lamp_block_shade",
+    "particle": "redwirelampsandlighting:block/blue_lamp_block_on"
+  }
+}

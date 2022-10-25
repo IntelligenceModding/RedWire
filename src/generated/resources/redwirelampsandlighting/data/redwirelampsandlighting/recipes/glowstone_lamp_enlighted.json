@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "redwirelampsandlighting:glowstone_lamp"
+    }
+  ],
+  "result": {
+    "item": "redwirelampsandlighting:glowstone_lamp_enlighted"
+  }
+}
