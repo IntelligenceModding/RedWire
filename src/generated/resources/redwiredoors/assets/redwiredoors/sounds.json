@@ -1,0 +1,34 @@
+{
+  "tile.door.big_sliding_door.close": {
+    "sounds": [
+      {
+        "attenuation_distance": 6,
+        "name": "redwiredoors:tile.door.big_sliding_door.close"
+      }
+    ]
+  },
+  "tile.door.big_sliding_door.open": {
+    "sounds": [
+      {
+        "attenuation_distance": 6,
+        "name": "redwiredoors:tile.door.big_sliding_door.open"
+      }
+    ]
+  },
+  "tile.door.player_sensor.off": {
+    "sounds": [
+      {
+        "attenuation_distance": 5,
+        "name": "redwiredoors:tile.door.player_sensor.off"
+      }
+    ]
+  },
+  "tile.door.player_sensor.on": {
+    "sounds": [
+      {
+        "attenuation_distance": 5,
+        "name": "redwiredoors:tile.door.player_sensor.on"
+      }
+    ]
+  }
+}

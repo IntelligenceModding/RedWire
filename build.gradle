@@ -33,19 +33,26 @@ sourceSets {
     redwirelampsandlighting {
         redwirelampsandlighting.resources.srcDirs += ['src/generated/resources/redwirelampsandlighting']
     }
+    redwiredoors {
+        redwiredoors.resources.srcDirs += ['src/generated/resources/redwiredoors']
+    }
 }
 
 configurations {
     redwirelampsandlightingImplementation.extendsFrom(implementation)
     redwirelampsandlightingCompileOnly.extendsFrom(compileOnly)
     redwirelampsandlightingRuntimeOnly.extendsFrom(runtimeOnly)
+    redwiredoorsImplementation.extendsFrom(implementation)
+    redwiredoorsCompileOnly.extendsFrom(compileOnly)
+    redwiredoorsRuntimeOnly.extendsFrom(runtimeOnly)
 }
 
 minecraft {
     mappings channel: "${mappings_channel}", version: "${mappings_version}"
 
     accessTransformers.from(file('src/redwirelampsandlighting/resources/META-INF/accesstransformer.cfg'),
-            file('src/main/resources/META-INF/accesstransformer.cfg'))
+            file('src/main/resources/META-INF/accesstransformer.cfg'),
+            file('src/redwiredoors/resources/META-INF/accesstransformer.cfg'))
 
     runs {
         client {
@@ -65,6 +72,9 @@ minecraft {
                 redwirelampsandlighting {
                     source sourceSets.redwirelampsandlighting
                 }
+                redwiredoors {
+                    source sourceSets.redwiredoors
+                }
             }
         }
 
@@ -81,6 +91,9 @@ minecraft {
                 }
                 redwirelampsandlighting {
                     source sourceSets.redwirelampsandlighting
+                }
+                redwiredoors {
+                    source sourceSets.redwiredoors
                 }
             }
         }
@@ -99,6 +112,9 @@ minecraft {
                 redwirelampsandlighting {
                     source sourceSets.redwirelampsandlighting
                 }
+                redwiredoors {
+                    source sourceSets.redwiredoors
+                }
             }
         }
 
@@ -108,7 +124,8 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
             args '--mod', 'redwirecore', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'),
-                    '--mod', 'redwirelampsandlighting', '--existing', file('src/redwirelampsandlighting/resources/')
+                    '--mod', 'redwirelampsandlighting', '--existing', file('src/redwirelampsandlighting/resources/'),
+                    '--mod', 'redwiredoors', '--existing', file('src/redwiredoors/resources/')
 
             mods {
                 redwirecore {
@@ -117,6 +134,9 @@ minecraft {
                 redwirelampsandlighting {
                     source sourceSets.redwirelampsandlighting
                 }
+                redwiredoors {
+                    source sourceSets.redwiredoors
+                }
             }
         }
     }
@@ -124,6 +144,7 @@ minecraft {
 
 sourceSets.main.resources { srcDir 'src/generated/resources/redwirecore' }
 sourceSets.redwirelampsandlighting.resources { srcDir 'src/generated/resources/redwirelampsandlighting' }
+sourceSets.redwiredoors.resources { srcDir 'src/generated/resources/redwiredoors' }
 
 repositories {
     maven {
@@ -132,12 +153,16 @@ repositories {
             includeGroup "curse.maven"
         }
     }
+    maven {
+        url 'https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/'
+    }
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
     implementation fg.deobf("curse.maven:jei-${jei_version}")
+    implementation fg.deobf('software.bernie.geckolib:geckolib-forge-1.19:3.1.31')
 }
 
 def getManifest(String name) {
@@ -160,6 +185,10 @@ rootProject.tasks.named("processRedwirelampsandlightingResources") {
     duplicatesStrategy = 'exclude'
 }
 
+rootProject.tasks.named("processRedwiredoorsResources") {
+    duplicatesStrategy = 'exclude'
+}
+
 jar {
     duplicatesStrategy(DuplicatesStrategy.WARN)
     archiveFileName.set("RedWireCore-${project.version}.jar")
@@ -178,12 +207,23 @@ task redwirelampsandlightingJar(type: Jar) {
     afterEvaluate { finalizedBy reobfRedwirelampsandlightingJar}
 }
 
+task redwiredoorsJar(type: Jar) {
+    duplicatesStrategy(DuplicatesStrategy.WARN)
+    archiveFileName.set("RedWireDoors-${project.version}.jar")
+    archiveClassifier.set("redwiredoors")
+    manifest.attributes(getManifest("RedWireDoors"))
+    from sourceSets.redwiredoors.output
+    afterEvaluate { finalizedBy reobfRedwiredoorsJar}
+}
+
 reobf {
     jar {classpath.from(sourceSets.main.compileClasspath)}
     redwirelampsandlightingJar {classpath.from(sourceSets.redwirelampsandlighting.compileClasspath)}
+    redwiredoorsJar {classpath.from(sourceSets.redwiredoors.compileClasspath)}
 }
 
 artifacts {
     archives jar
     archives redwirelampsandlightingJar
+    archives redwiredoorsJar
 }

@@ -86,6 +86,76 @@ public class ForgeEvents {
                     color = new Color(rgbColour[0], rgbColour[1], rgbColour[2]);
                 }
 
+                //TODO: ADD RENDERING FOR DOORS!
+                /*
+                BlockState blockState = minecraft.level.getBlockState(new BlockPos(posToRenderSquareAt.getX(), posToRenderSquareAt.getY(), posToRenderSquareAt.getZ()));
+                if (blockState.getBlock() instanceof BigSlidingDoorBlock) {
+                    if (blockState.getValue(BigSlidingDoorBlock.FACING) == Direction.NORTH || blockState.getValue(BigSlidingDoorBlock.FACING) == Direction.SOUTH) {
+                        // Down
+                        buffer.vertex(matrix, x + -1, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 0, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + -1, y + 0, z + 0.5625f).color(r, g, b, a).endVertex();
+                        // Up
+                        buffer.vertex(matrix, x + -1, y + 2, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + -1, y + 2, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 2, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 2, z + 0.4375f).color(r, g, b, a).endVertex();
+                        // North
+                        buffer.vertex(matrix, x + -1, y + 2, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 2, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + -1, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
+                        // South
+                        buffer.vertex(matrix, x + -1, y + 2, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + -1, y + 0, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 0, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 2, z + 0.5625f).color(r, g, b, a).endVertex();
+                        // East
+                        buffer.vertex(matrix, x + -1, y + 2, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + -1, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + -1, y + 0, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + -1, y + 2, z + 0.5625f).color(r, g, b, a).endVertex();
+                        // West
+                        buffer.vertex(matrix, x + 2, y + 2, z + 0.4375f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 2, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 0, z + 0.5625f).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 2, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
+                    } else {
+                        // Down
+                        buffer.vertex(matrix, x + 0.4375f, y + 0, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 0, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 0, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 0, z + -1).color(r, g, b, a).endVertex();
+                        // Up
+                        buffer.vertex(matrix, x + 0.4375f, y + 2, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 2, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 2, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 2, z + 2).color(r, g, b, a).endVertex();
+                        // North
+                        buffer.vertex(matrix, x + 0.4375f, y + 2, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 2, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 0, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 0, z + -1).color(r, g, b, a).endVertex();
+                        // South
+                        buffer.vertex(matrix, x + 0.5625f, y + 2, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 0, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 0, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 2, z + 2).color(r, g, b, a).endVertex();
+                        // East
+                        buffer.vertex(matrix, x + 0.4375f, y + 2, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 0, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 0, z + -1).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 2, z + -1).color(r, g, b, a).endVertex();
+                        // West
+                        buffer.vertex(matrix, x + 0.4375f, y + 2, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 2, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.5625f, y + 0, z + 2).color(r, g, b, a).endVertex();
+                        buffer.vertex(matrix, x + 0.4375f, y + 0, z + 2).color(r, g, b, a).endVertex();
+                    }
+                }
+                 */
+
                 float r = color.getRed() / 255f;
                 float g = color.getGreen() / 255f;
                 float b = color.getBlue() / 255f;
