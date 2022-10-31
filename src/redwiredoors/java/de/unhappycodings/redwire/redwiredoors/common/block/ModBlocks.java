@@ -15,9 +15,10 @@ public class ModBlocks {
     public static final RegistryObject<BigSlidingDoorBlock> STONE_BIG_SLIDING_DOOR = register("stone_big_sliding_door",
             () -> new BigSlidingDoorBlock(ModBlockEntities.STONE_BIG_SLIDING_DOOR));
 
+    public static final RegistryObject<PlayerSensorBlock> STONE_PLAYER_SENSOR_BLOCK = register("stone_player_sensor_block",
+            () -> new PlayerSensorBlock(ModBlockEntities.STONE_PLAYER_SENSOR_BLOCK));
     public static final RegistryObject<BoundingBlock> BOUNDING = registerNoTab("bounding", BoundingBlock::new);
 
-    //public static final RegistryObject<WirelessControllerBlock> WIRELESS_CONTROLLER = register("wireless_lamp_controller", WirelessControllerBlock::new);
 
     private ModBlocks() {
         throw new IllegalStateException("ModBlocks class");

@@ -3,6 +3,7 @@ package de.unhappycodings.redwire.redwiredoors.common.block;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.BigSlidingDoorEntity;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.BoundingBlockEntity;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.ModBlockEntities;
+import de.unhappycodings.redwire.redwiredoors.common.util.LocationUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -25,6 +26,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class BoundingBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    boolean lastState = false;
 
     public BoundingBlock() {
         super(Properties.copy(Blocks.STONE).sound(new SoundType(0.0F, 0.0F, SoundEvents.STONE_BREAK,
@@ -102,33 +104,42 @@ public class BoundingBlock extends BaseEntityBlock {
                 default -> x1 = -16;
             }
         }
+
         if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-            switch (tagDoor.getByte("state")) {
-                case 2:
-                    return Shapes.or(Block.box(-16 + x1, y1, 7, 3.5 + x1, 32 + y1, 9), Block.box(12.5 + x1, y1, 7, 32 + x1, 32 + y1, 9));
-                case 3:
-                    return Shapes.or(Block.box(-16 + x1, y1, 7, -1 + x1, 32 + y1, 9), Block.box(17 + x1, y1, 7, 32 + x1, 32 + y1, 9));
-                case 4:
-                    return Shapes.or(Block.box(-16 + x1, y1, 7, -5.5 + x1, 32 + y1, 9), Block.box(21.5 + x1, y1, 7, 32 + x1, 32 + y1, 9));
-                case 5:
-                    return Shapes.or(Block.box(-16 + x1, y1, 7, -11.15 + x1, 32 + y1, 9), Block.box(27.15 + x1, y1, 7, 32 + x1, 32 + y1, 9));
-                case 1:
+            byte state = tagDoor.getByte("state");
+            if (LocationUtil.getBigSlidingDoorRedstoneState(doorBlockEntity.getLevel(), doorBlockEntity.getBlockPos())) {
+                if (state >= 20) {
+                    if (state == 38)
+                        return Shapes.or(Block.box(-16 + x1, y1, 7, -11.15 + x1, 32 + y1, 9), Block.box(27.15 + x1, y1, 7, 32 + x1, 32 + y1, 9));
+                    return Shapes.or(Block.box(-16 + x1, y1, 7, 8 + x1 - ((state - 20) * 1.12), 32 + y1, 9), Block.box(8 + x1 + ((state - 20) * 1.12), y1, 7, 32 + x1, 32 + y1, 9));
+                } else {
                     return Shapes.or(Block.box(-16 + x1, y1, 7, 8 + x1, 32 + y1, 9), Block.box(8 + x1, y1, 7, 32 + x1, 32 + y1, 9));
+                }
+            } else {
+                if (state <= 18) {
+                    return Shapes.or(Block.box(-16 + x1, y1, 7, -11.15 + x1 + (state * 1.12), 32 + y1, 9), Block.box(27.15 + x1 - (state * 1.12), y1, 7, 32 + x1, 32 + y1, 9));
+                } else {
+                    return Shapes.or(Block.box(-16 + x1, y1, 7, 8 + x1, 32 + y1, 9), Block.box(8 + x1, y1, 7, 32 + x1, 32 + y1, 9));
+                }
             }
         }
-        return switch (tagDoor.getByte("state")) {
-            case 2 ->
-                    Shapes.or(Block.box(7, y1, 12.5 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, 3.5 + x1));
-            case 3 ->
-                    Shapes.or(Block.box(7, y1, 17 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, -1 + x1));
-            case 4 ->
-                    Shapes.or(Block.box(7, y1, 21.5 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, -5.5 + x1));
-            case 5 ->
-                    Shapes.or(Block.box(7, y1, 27.15 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, -11.15 + x1));
-            case 1 ->
-                    Shapes.or(Block.box(7, y1, 8 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, 8.0 + x1));
-            default -> Shapes.empty();
-        };
+
+        byte state = tagDoor.getByte("state");
+        if (LocationUtil.getBigSlidingDoorRedstoneState(doorBlockEntity.getLevel(), doorBlockEntity.getBlockPos())) {
+            if (state >= 20) {
+                if (state == 38)
+                    return Shapes.or(Block.box(7, y1, 27.15 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, -11.15 + x1));
+                return Shapes.or(Block.box(7, y1, 8 + x1 + ((state - 20) * 1.12), 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, 8.0 + x1 - ((state - 20) * 1.12)));
+            } else {
+                return Shapes.or(Block.box(7, y1, 8 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, 8.0 + x1));
+            }
+
+        } else {
+            if (state <= 18)
+                return Shapes.or(Block.box(7, y1, 8 + x1 - ((state - 20) * 1.12), 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, 8.0 + x1 + ((state - 20) * 1.12)));
+            else
+                return Shapes.or(Block.box(7, y1, 8 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, 8.0 + x1));
+        }
     }
 
     @Override

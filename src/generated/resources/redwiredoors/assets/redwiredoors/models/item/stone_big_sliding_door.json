@@ -1,0 +1,9 @@
+{
+  "parent": "redwiredoors:generation/big_sliding_door",
+  "textures": {
+    "0": "minecraft:block/stone",
+    "1": "minecraft:block/gray_stained_glass",
+    "2": "redwiredoors:block/anorthosite_block_smooth_fine",
+    "particle": "minecraft:block/stone"
+  }
+}

@@ -2,7 +2,9 @@ package de.unhappycodings.redwire.redwiredoors.common.data;
 
 import de.unhappycodings.redwire.redwiredoors.RedwireDoors;
 import de.unhappycodings.redwire.redwiredoors.common.block.ModBlocks;
+import de.unhappycodings.redwire.redwiredoors.common.block.PlayerSensorBlock;
 import de.unhappycodings.redwire.redwiredoors.common.util.ItemUtil;
+import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -22,11 +24,46 @@ public class ModelAndBlockStatesProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         bigSlidingDoorBlock(ModBlocks.STONE_BIG_SLIDING_DOOR.get(), new ResourceLocation("block/stone"));
+        playerSensorBlock(ModBlocks.STONE_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation("block/stone"));
 
     }
 
+    public void playerSensorBlock(PlayerSensorBlock block, ResourceLocation texture) {
+        ModelFile modelOn = models().withExistingParent(ItemUtil.getRegString(block) + "_on", new ResourceLocation(RedwireDoors.MOD_ID, "generation/player_sensor"))
+                .texture("1", texture)
+                .texture("2", new ResourceLocation(RedwireDoors.MOD_ID, "block/green_lamp_block_on"))
+                .texture("3", new ResourceLocation(RedwireDoors.MOD_ID, "block/green_lamp_block_shade"))
+                .texture("particle", texture);
+        ModelFile modelOff = models().withExistingParent(ItemUtil.getRegString(block) + "_off", new ResourceLocation(RedwireDoors.MOD_ID, "generation/player_sensor"))
+                .texture("1", texture)
+                .texture("2", new ResourceLocation(RedwireDoors.MOD_ID, "block/red_lamp_block_on"))
+                .texture("3", new ResourceLocation(RedwireDoors.MOD_ID, "block/red_lamp_block_shade"))
+                .texture("particle", texture);
+        playerSensorBlock(block, modelOn, modelOff);
+    }
+
+    public void playerSensorBlock(PlayerSensorBlock block, ModelFile sensorOn, ModelFile sensorOff) {
+        getVariantBuilder(block).forAllStates(state -> {
+            Direction facing = state.getValue(PlayerSensorBlock.FACING);
+            boolean powered = state.getValue(PlayerSensorBlock.POWERED);
+            return ConfiguredModel.builder()
+                    .modelFile(powered ? sensorOn : sensorOff)
+                    .rotationY(getSensorRotation(facing))
+                    .build();
+        });
+    }
+
+    private static int getSensorRotation(Direction facing) {
+        return switch (facing) {
+            case EAST -> 90;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            default -> 0;
+        };
+    }
+
     public void bigSlidingDoorBlock(Block block, ResourceLocation texture) {
-        ModelFile model = models().withExistingParent(ItemUtil.getRegString(block), "block/cube_all").texture("all", texture);
+        ModelFile model = models().withExistingParent(ItemUtil.getRegString(block), "block/cube_all").texture("all", texture).texture("particle", texture);
         getVariantBuilder(block).forAllStates(state -> ConfiguredModel.builder().modelFile(model).build());
     }
 

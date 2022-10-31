@@ -1,6 +1,7 @@
 {
   "values": [
     "redwiredoors:stone_big_sliding_door",
+    "redwiredoors:stone_player_sensor_block",
     "redwiredoors:bounding"
   ]
 }

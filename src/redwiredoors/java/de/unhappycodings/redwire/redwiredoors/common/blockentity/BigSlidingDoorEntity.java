@@ -76,23 +76,8 @@ public class BigSlidingDoorEntity extends BlockEntity implements IAnimatable, An
                 }
             }
         }
-        if (xState) {
-            switch (ticks) {
-                case 36 -> tag.putByte("state", (byte) 5);
-                case 30 -> tag.putByte("state", (byte) 4);
-                case 25 -> tag.putByte("state", (byte) 3);
-                case 21 -> tag.putByte("state", (byte) 2);
-                case 18 -> tag.putByte("state", (byte) 1);
-            }
-            this.load(tag);
-        } else {
-            switch (ticks) {
-                case 28 -> tag.putByte("state", (byte) 1);
-                case 23 -> tag.putByte("state", (byte) 2);
-                case 18 -> tag.putByte("state", (byte) 3);
-                case 14 -> tag.putByte("state", (byte) 4);
-                case 0 -> tag.putByte("state", (byte) 5);
-            }
+        if (ticks >= 0 && ticks <= 38) {
+            tag.putByte("state", (byte) ticks);
             this.load(tag);
         }
         level.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_ALL);
@@ -130,24 +115,20 @@ public class BigSlidingDoorEntity extends BlockEntity implements IAnimatable, An
             event.getController().transitionLengthTicks = 0;
             if (xState) {
                 if (!this.lasts) {
-                    System.out.println("1");
                     controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.anim_open", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                     this.lasts = true;
                 } else {
                     if (event.getController().getAnimationState() == AnimationState.Stopped) {
                         controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.idle_open", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
-                        System.out.println("2");
                     }
                 }
             } else {
                 if (this.lasts) {
-                    System.out.println("3");
                     controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.anim_close", ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME));
                     this.lasts = false;
                 } else {
                     if (event.getController().getAnimationState() == AnimationState.Stopped) {
                         controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.idle_close", ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME));
-                        System.out.println("4");
                     }
                 }
             }

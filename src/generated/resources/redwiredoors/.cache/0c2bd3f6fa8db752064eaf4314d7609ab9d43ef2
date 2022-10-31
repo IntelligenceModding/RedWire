@@ -1,3 +1,6 @@
-// 1.19.2	2022-10-27T01:36:47.0344415	Block States: redwiredoors
+// 1.19.2	2022-10-31T13:27:41.4467889	Block States: redwiredoors
 e423ef0eaa95f0746555d472e311d9d62656b2ab assets/redwiredoors/blockstates/stone_big_sliding_door.json
+cfb8a330f81590d067ac635302e0e871a8f645c3 assets/redwiredoors/blockstates/stone_player_sensor_block.json
 bd721385e8bb8bf981c7a5e7a4d54ecf81cbcfc4 assets/redwiredoors/models/block/stone_big_sliding_door.json
+9d5f5be74d0df9e1015b99447231c28c0d8e4de4 assets/redwiredoors/models/block/stone_player_sensor_block_off.json
+eddb8085269bb503117a5ddc50abc2eb561dc608 assets/redwiredoors/models/block/stone_player_sensor_block_on.json
