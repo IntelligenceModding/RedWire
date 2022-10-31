@@ -126,14 +126,16 @@ public class BigSlidingDoorEntity extends BlockEntity implements IAnimatable, An
         BlockState blockState = level.getBlockState(blockPos);
         if (blockState.getBlock() != Blocks.AIR) {
             boolean xState = LocationUtil.getBigSlidingDoorRedstoneState(level, blockPos);
+
+            event.getController().transitionLengthTicks = 0;
             if (xState) {
                 if (!this.lasts) {
                     System.out.println("1");
-                    controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.anim_open", ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME));
+                    controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.anim_open", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                     this.lasts = true;
                 } else {
                     if (event.getController().getAnimationState() == AnimationState.Stopped) {
-                        controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.idle_open", ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME));
+                        controller.setAnimation(new AnimationBuilder().addAnimation("animation.big_sliding_door.idle_open", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
                         System.out.println("2");
                     }
                 }
