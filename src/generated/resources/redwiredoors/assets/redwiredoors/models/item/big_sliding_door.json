@@ -1,0 +1,7 @@
+{
+  "parent": "redwiredoors:generation/big_sliding_door",
+  "textures": {
+    "0": "redwiredoors:geo/textures/stone_big_sliding_door",
+    "particle": "redwiredoors:geo/textures/stone_big_sliding_door"
+  }
+}

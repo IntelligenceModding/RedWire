@@ -1,5 +1,6 @@
 package de.unhappycodings.redwire.redwirelampsandlighting;
 
+import de.unhappycodings.redwire.redwirelampsandlighting.common.ItemCreativeTab;
 import de.unhappycodings.redwire.redwirelampsandlighting.common.block.ModBlocks;
 import de.unhappycodings.redwire.redwirelampsandlighting.common.item.ModItems;
 import de.unhappycodings.redwire.redwirelampsandlighting.common.registration.Registration;

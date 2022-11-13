@@ -1,26 +1,15 @@
 package de.unhappycodings.redwire.redwiredoors.common.event;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import com.mojang.math.Matrix4f;
 import de.unhappycodings.redwire.redwiredoors.RedwireDoors;
 import de.unhappycodings.redwire.redwiredoors.common.block.BigSlidingDoorBlock;
 import de.unhappycodings.redwire.redwiredoors.common.block.BoundingBlock;
 import de.unhappycodings.redwire.redwiredoors.common.block.ModBlocks;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.BoundingBlockEntity;
 import de.unhappycodings.redwire.redwiredoors.common.util.ItemUtil;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;

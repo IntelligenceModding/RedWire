@@ -52,65 +52,45 @@ public class WirelessControllerEntity extends BlockEntity {
     }
 
     public void tick() {
-        BlockState state = this.getBlockState();
         Level level = this.getLevel();
         BlockPos pos = this.getBlockPos();
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (!(blockEntity instanceof WirelessControllerEntity curBlockEntity)) return;
+        CompoundTag tag = new CompoundTag();
+        curBlockEntity.saveAdditional(tag);
         if (level.hasNeighborSignal(pos)) {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (!(blockEntity instanceof WirelessControllerEntity curBlockEntity)) return;
-            CompoundTag tag = new CompoundTag();
-            curBlockEntity.saveAdditional(tag);
-
             if (!tag.getBoolean("powered")) {
                 tag.putBoolean("powered", !tag.getBoolean("powered"));
                 blockEntity.load(tag);
                 blockEntity.setChanged();
-                if (!tag.isEmpty()) {
-                    TagKey<Block> controllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwirelampsandlighting:lamps/controllable"));
-                    ListTag list = tag.getList("positions", Tag.TAG_COMPOUND);
-                    list.forEach((x) -> {
-                        BlockPos blockPos = NbtUtil.getPos((CompoundTag) x);
-                        BlockState blockState = level.getBlockState(blockPos);
-                        if (blockState.is(controllables)) {
-                            if (blockState.getValue(BlockStateProperties.LIT)) {
-                                blockState = blockState.setValue(BlockStateProperties.LIT, false);
-                            } else {
-                                blockState = blockState.setValue(BlockStateProperties.LIT, true);
-                            }
-                            this.origin = true;
-                            level.setBlockAndUpdate(blockPos, blockState.setValue(REMOTED, true));
-
-                        }
-                    });
-                }
+                loopFiles(tag, true);
             }
         } else {
-            BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (!(blockEntity instanceof WirelessControllerEntity curBlockEntity)) return;
-            CompoundTag tag = new CompoundTag();
-            curBlockEntity.saveAdditional(tag);
-
             if (tag.getBoolean("powered")) {
                 tag.putBoolean("powered", !tag.getBoolean("powered"));
                 blockEntity.load(tag);
                 blockEntity.setChanged();
-                if (!tag.isEmpty()) {
-                    ListTag list = tag.getList("positions", Tag.TAG_COMPOUND);
-                    list.forEach((x) -> {
-                        TagKey<Block> controllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwirelampsandlighting:lamps/controllable"));
-                        BlockPos blockPos = NbtUtil.getPos((CompoundTag) x);
-                        BlockState blockState = level.getBlockState(blockPos);
-                        if (blockState.is(controllables)) {
-                            if (blockState.getValue(BlockStateProperties.LIT)) {
-                                blockState = blockState.setValue(BlockStateProperties.LIT, false);
-                            } else {
-                                blockState = blockState.setValue(BlockStateProperties.LIT, true);
-                            }
-                            level.setBlockAndUpdate(blockPos, blockState.setValue(REMOTED, false));
-                        }
-                    });
-                }
+                loopFiles(tag, false);
             }
+        }
+    }
+
+    private void loopFiles(CompoundTag tag, boolean state) {
+        if (!tag.isEmpty()) {
+            ListTag list = tag.getList("positions", Tag.TAG_COMPOUND);
+            TagKey<Block> controllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwirelampsandlighting:lamps/controllable"));
+            TagKey<Block> doorControllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwiredoors:doors/controllable"));
+            list.forEach(position -> {
+                BlockPos blockPos = NbtUtil.getPos((CompoundTag) position);
+                BlockState blockState = level.getBlockState(blockPos);
+                if (blockState.is(controllables)) {
+                    blockState = blockState.setValue(BlockStateProperties.LIT, !blockState.getValue(BlockStateProperties.LIT));
+                    level.setBlockAndUpdate(blockPos, blockState.setValue(REMOTED, state));
+                } else if (blockState.is(doorControllables)) {
+                    blockState = blockState.setValue(BlockStateProperties.POWERED, !blockState.getValue(BlockStateProperties.POWERED));
+                    level.setBlockAndUpdate(blockPos, blockState.setValue(REMOTED, state));
+                }
+            });
         }
     }
 }

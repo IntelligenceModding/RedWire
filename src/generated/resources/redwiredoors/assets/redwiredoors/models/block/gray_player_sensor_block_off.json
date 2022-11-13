@@ -1,0 +1,9 @@
+{
+  "parent": "redwiredoors:generation/player_sensor",
+  "textures": {
+    "1": "redwiredoors:block/gray",
+    "2": "redwiredoors:block/red_lamp_block_on",
+    "3": "redwiredoors:block/red_lamp_block_shade",
+    "particle": "redwiredoors:block/gray"
+  }
+}

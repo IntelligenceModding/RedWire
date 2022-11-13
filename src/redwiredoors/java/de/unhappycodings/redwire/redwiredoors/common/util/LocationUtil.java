@@ -1,6 +1,7 @@
 package de.unhappycodings.redwire.redwiredoors.common.util;
 
 import de.unhappycodings.redwire.redwiredoors.common.block.BigSlidingDoorBlock;
+import de.unhappycodings.redwire.redwiredoors.common.blockentity.BigSlidingDoorEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.Level;

@@ -12,11 +12,11 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
 
-    public static final RegistryObject<BigSlidingDoorBlock> STONE_BIG_SLIDING_DOOR = register("stone_big_sliding_door",
-            () -> new BigSlidingDoorBlock(ModBlockEntities.STONE_BIG_SLIDING_DOOR));
+    public static final RegistryObject<BigSlidingDoorBlock> BIG_SLIDING_DOOR = register("big_sliding_door", () -> new BigSlidingDoorBlock(ModBlockEntities.BIG_SLIDING_DOOR));
 
-    public static final RegistryObject<PlayerSensorBlock> STONE_PLAYER_SENSOR_BLOCK = register("stone_player_sensor_block",
-            () -> new PlayerSensorBlock(ModBlockEntities.STONE_PLAYER_SENSOR_BLOCK));
+    public static final RegistryObject<PlayerSensorBlock> WHITE_PLAYER_SENSOR_BLOCK = register("white_player_sensor_block", () -> new PlayerSensorBlock(ModBlockEntities.WHITE_PLAYER_SENSOR_BLOCK));
+    public static final RegistryObject<PlayerSensorBlock> GRAY_PLAYER_SENSOR_BLOCK = register("gray_player_sensor_block", () -> new PlayerSensorBlock(ModBlockEntities.GRAY_PLAYER_SENSOR_BLOCK));
+    public static final RegistryObject<PlayerSensorBlock> BLACK_PLAYER_SENSOR_BLOCK = register("black_player_sensor_block", () -> new PlayerSensorBlock(ModBlockEntities.BLACK_PLAYER_SENSOR_BLOCK));
     public static final RegistryObject<BoundingBlock> BOUNDING = registerNoTab("bounding", BoundingBlock::new);
 
 

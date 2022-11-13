@@ -77,11 +77,12 @@ public class LinkingCardItem extends Item {
         Player player = context.getPlayer();
         ItemStack item = context.getItemInHand();
         BlockPos pos = context.getClickedPos();
-        String blockName = level.getBlockState(pos).getBlock().getName().toString();
 
-        TagKey<Block> controllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwirelampsandlighting:lamps/controllable"));
+        TagKey<Block> lampControllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwirelampsandlighting:lamps/controllable"));
+        TagKey<Block> doorControllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwiredoors:doors/controllable"));
 
-        if (level.getBlockState(pos).is(controllables)) {
+        System.out.println(level.getBlockState(pos).is(doorControllables));
+        if (level.getBlockState(pos).is(lampControllables) || level.getBlockState(pos).is(doorControllables)) {
             ListTag nbtList = new ListTag();
             if (item.getOrCreateTag().contains("positions"))
                 nbtList = item.getOrCreateTag().getList("positions", Tag.TAG_COMPOUND);

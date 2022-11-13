@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "a": {
+      "item": "minecraft:stone_slab"
+    },
+    "b": {
+      "item": "minecraft:glass"
+    },
+    "c": {
+      "item": "minecraft:iron_door"
+    },
+    "d": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "aaa",
+    "bcb",
+    "ada"
+  ],
+  "result": {
+    "item": "redwiredoors:big_sliding_door"
+  }
+}

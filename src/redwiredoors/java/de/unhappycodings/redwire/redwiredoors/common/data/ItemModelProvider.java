@@ -16,9 +16,11 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
 
     @Override
     protected void registerModels() {
-        bigSlidingDoorItem(ModBlocks.STONE_BIG_SLIDING_DOOR.get(), new ResourceLocation("block/stone"));
-        playerSensorItem(ModBlocks.STONE_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation("block/stone"));
-
+        bigSlidingDoorItem(ModBlocks.BIG_SLIDING_DOOR.get(), new ResourceLocation(RedwireDoors.MOD_ID, "geo/textures/stone_big_sliding_door"));
+        playerSensorItem(ModBlocks.WHITE_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation(RedwireDoors.MOD_ID, "block/white"));
+        playerSensorItem(ModBlocks.GRAY_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation(RedwireDoors.MOD_ID, "block/gray"));
+        playerSensorItem(ModBlocks.BLACK_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation(RedwireDoors.MOD_ID, "block/black"));
+        withExistingParent(ItemUtil.getRegString(ModBlocks.BOUNDING.get()), new ResourceLocation("item/barrier"));
     }
 
     private void playerSensorItem(Block block, ResourceLocation texture) {
@@ -32,8 +34,6 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
     private void bigSlidingDoorItem(Block block, ResourceLocation texture) {
         withExistingParent(ItemUtil.getRegString(block), new ResourceLocation(RedwireDoors.MOD_ID, "generation/big_sliding_door"))
                 .texture("0", texture)
-                .texture("1", new ResourceLocation("block/gray_stained_glass"))
-                .texture("2", new ResourceLocation(RedwireDoors.MOD_ID, "block/anorthosite_block_smooth_fine"))
                 .texture("particle", texture);
     }
 

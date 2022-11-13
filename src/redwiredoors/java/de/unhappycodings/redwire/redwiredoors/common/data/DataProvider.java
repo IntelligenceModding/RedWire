@@ -16,6 +16,7 @@ public class DataProvider {
         ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         generator.addProvider(true, new LanguageProvider(generator, "en_us"));
+        generator.addProvider(true, new BlockTagsProvider(generator, RedwireDoors.MOD_ID, existingFileHelper));
         generator.addProvider(true, new LootTableProvider(generator));
         generator.addProvider(true, new SoundProvider(generator, RedwireDoors.MOD_ID, existingFileHelper));
         generator.addProvider(true, new RecipeProvider(generator));

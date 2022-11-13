@@ -4,7 +4,7 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId = "redwirecore"
-version = "1.0r"
+version = "${file.jarVersion}"
 displayName = "RedWire: Core"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/redwire-core"
 logoFile = "logo.png"
@@ -21,7 +21,7 @@ side = "BOTH"
 [[dependencies.redwirecore]]
 modId = "redwirelampsandlighting"
 mandatory = false
-versionRange = "[1.0,)"
+versionRange = "[1.2,)"
 ordering = "NONE"
 side = "BOTH"
 

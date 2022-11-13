@@ -103,15 +103,9 @@ public class PlayerSensorBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable BlockGetter level, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag flag) {
-
-        tooltipComponents.add(TextComponentUtil.getTComp("tooltip.player_sensor_1", false, ChatFormatting.GRAY).append(" ")
-                .append(Component.literal("2").setStyle(Style.EMPTY.withColor(RedwireDoors.MOD_COLOR)))
-                .append(Component.literal("x").setStyle(Style.EMPTY.withColor(ChatFormatting.DARK_GRAY)))
-                .append(Component.literal("3").setStyle(Style.EMPTY.withColor(RedwireDoors.MOD_COLOR))).append(" ")
-                .append(Component.translatable("block.blocksmod.player_sensor").withStyle(Style.EMPTY.withColor(RedwireDoors.MOD_COLOR))));
-        tooltipComponents.add(Component.literal(""));
-        tooltipComponents.add(TextComponentUtil.getTComp("tooltip.player_sensor_2", false, ChatFormatting.GRAY).append(" ")
-                .append(Component.translatable("block.blocksmod.all_remotables").withStyle(Style.EMPTY.withColor(RedwireDoors.MOD_COLOR_SUB))));
+        tooltipComponents.add(Component.literal("This sensor detects players in a area below it.").setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW)));
+        tooltipComponents.add(Component.literal("Area size: ").setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW))
+                .append(Component.literal("3x2x2 (WxHxD)").withStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
 
         super.appendHoverText(stack, level, tooltipComponents, flag);
     }

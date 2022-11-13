@@ -56,7 +56,6 @@ public class BoundingBlock extends BaseEntityBlock {
     @NotNull
     @Override
     public VoxelShape getShape(@NotNull BlockState blockState, @NotNull BlockGetter blockGetter, @NotNull BlockPos blockPos, @NotNull CollisionContext context) {
-        Direction direction = blockState.getValue(FACING);
         int x1 = 0;
         int y1 = 0;
 
@@ -64,16 +63,18 @@ public class BoundingBlock extends BaseEntityBlock {
         if (!(blockEntityBounding instanceof BoundingBlockEntity boundingBlockEntity)) return Shapes.empty();
         CompoundTag tagBounding = new CompoundTag();
         boundingBlockEntity.saveAdditional(tagBounding);
+
         int x = tagBounding.getInt("origin-x");
         int y = tagBounding.getInt("origin-y");
         int z = tagBounding.getInt("origin-z");
         BlockPos blockPosDoor = new BlockPos(x, y, z);
 
         BlockEntity blockEntityDoor = blockGetter.getBlockEntity(blockPosDoor);
-        if (!(blockEntityDoor instanceof BigSlidingDoorEntity doorBlockEntity)) return Shapes.empty();
+        if (!(blockEntityDoor instanceof BigSlidingDoorEntity doorBlockEntity)) return Shapes.block();
         CompoundTag tagDoor = new CompoundTag();
         doorBlockEntity.saveAdditional(tagDoor);
 
+        Direction direction = blockState.getValue(FACING);
         if (direction == Direction.SOUTH || direction == Direction.WEST) {
             switch (tagBounding.getByte("pos")) {
                 case 2 -> {
@@ -107,7 +108,7 @@ public class BoundingBlock extends BaseEntityBlock {
 
         if (direction == Direction.NORTH || direction == Direction.SOUTH) {
             byte state = tagDoor.getByte("state");
-            if (LocationUtil.getBigSlidingDoorRedstoneState(doorBlockEntity.getLevel(), doorBlockEntity.getBlockPos())) {
+            if (doorBlockEntity.isLast()) {
                 if (state >= 20) {
                     if (state == 38)
                         return Shapes.or(Block.box(-16 + x1, y1, 7, -11.15 + x1, 32 + y1, 9), Block.box(27.15 + x1, y1, 7, 32 + x1, 32 + y1, 9));
@@ -116,16 +117,15 @@ public class BoundingBlock extends BaseEntityBlock {
                     return Shapes.or(Block.box(-16 + x1, y1, 7, 8 + x1, 32 + y1, 9), Block.box(8 + x1, y1, 7, 32 + x1, 32 + y1, 9));
                 }
             } else {
-                if (state <= 18) {
+                if (state <= 18)
                     return Shapes.or(Block.box(-16 + x1, y1, 7, -11.15 + x1 + (state * 1.12), 32 + y1, 9), Block.box(27.15 + x1 - (state * 1.12), y1, 7, 32 + x1, 32 + y1, 9));
-                } else {
+                else
                     return Shapes.or(Block.box(-16 + x1, y1, 7, 8 + x1, 32 + y1, 9), Block.box(8 + x1, y1, 7, 32 + x1, 32 + y1, 9));
-                }
             }
         }
 
         byte state = tagDoor.getByte("state");
-        if (LocationUtil.getBigSlidingDoorRedstoneState(doorBlockEntity.getLevel(), doorBlockEntity.getBlockPos())) {
+        if (doorBlockEntity.isLast()) {
             if (state >= 20) {
                 if (state == 38)
                     return Shapes.or(Block.box(7, y1, 27.15 + x1, 9, 32 + y1, 32 + x1), Block.box(7, y1, -16 + x1, 9, 32 + y1, -11.15 + x1));

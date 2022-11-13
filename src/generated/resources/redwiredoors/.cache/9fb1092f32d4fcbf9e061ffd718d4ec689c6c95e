@@ -1,1 +1,5 @@
-// 1.19.2	2022-10-27T01:36:47.0374413	Recipes
+// 1.19.2	2022-10-31T20:18:04.7196734	Recipes
+03ddc554fe1f205a1f02432d304deae7c21e843c data/redwiredoors/advancements/recipes/redwiredoors.items/big_sliding_door.json
+ab25a427cc6e561b7f395355d5c9fa8e71db4639 data/redwiredoors/advancements/recipes/redwiredoors.items/gray_player_sensor_block.json
+12e9f4cd80897ae9d5bf54ec31e5492073696b9a data/redwiredoors/recipes/big_sliding_door.json
+e817c372c51a27b091cb800a5d6280ec3b9fe1eb data/redwiredoors/recipes/gray_player_sensor_block.json

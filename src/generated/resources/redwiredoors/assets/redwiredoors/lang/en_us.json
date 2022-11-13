@@ -1,3 +1,8 @@
 {
-  "itemGroup.redwiredoors.lamps": "RedWire: Doors"
+  "block.redwiredoors.big_sliding_door": "Big Sliding Door",
+  "block.redwiredoors.black_player_sensor_block": "Player Sensor (Black)",
+  "block.redwiredoors.bounding": "Bounding (Redwire)",
+  "block.redwiredoors.gray_player_sensor_block": "Player Sensor (Gray)",
+  "block.redwiredoors.white_player_sensor_block": "Player Sensor (White)",
+  "itemGroup.redwiredoors.items": "RedWire: Doors"
 }

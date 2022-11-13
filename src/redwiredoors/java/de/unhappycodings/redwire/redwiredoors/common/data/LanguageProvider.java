@@ -1,6 +1,7 @@
 package de.unhappycodings.redwire.redwiredoors.common.data;
 
 import de.unhappycodings.redwire.redwiredoors.RedwireDoors;
+import de.unhappycodings.redwire.redwiredoors.common.block.ModBlocks;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
@@ -14,12 +15,12 @@ public class LanguageProvider extends net.minecraftforge.common.data.LanguagePro
 
     @Override
     protected void addTranslations() {
-        add("itemGroup.redwiredoors.lamps", "RedWire: Doors");
-    }
-
-    private String getTranslationName(ResourceLocation registryName) {
-        return toCamelCase(registryName.toString()
-                .replaceAll("blocksmod:", ""));
+        add("itemGroup.redwiredoors.items", "RedWire: Doors");
+        add(ModBlocks.BOUNDING.get(), "Bounding (Redwire)");
+        add(ModBlocks.BIG_SLIDING_DOOR.get(), "Big Sliding Door");
+        add(ModBlocks.WHITE_PLAYER_SENSOR_BLOCK.get(), "Player Sensor (White)");
+        add(ModBlocks.GRAY_PLAYER_SENSOR_BLOCK.get(), "Player Sensor (Gray)");
+        add(ModBlocks.BLACK_PLAYER_SENSOR_BLOCK.get(), "Player Sensor (Black)");
     }
 
     static String toCamelCase(String s) {

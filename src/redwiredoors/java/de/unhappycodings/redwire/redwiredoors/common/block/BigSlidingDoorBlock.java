@@ -9,10 +9,16 @@ import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -23,13 +29,19 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.lwjgl.openal.SOFTDeferredUpdates;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class BigSlidingDoorBlock extends BaseEntityBlock {
@@ -37,18 +49,6 @@ public class BigSlidingDoorBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty REMOTED = BooleanProperty.create("remoted");
     public RegistryObject<BlockEntityType<BigSlidingDoorEntity>> registryObject;
-
-    protected static final VoxelShape OPEN_NS_1 = Shapes.or(Block.box(-16, 0, 7, 8, 32, 9), Block.box(8, 0, 7, 32, 32, 9));
-    protected static final VoxelShape OPEN_NS_2 = Shapes.or(Block.box(-16, 0, 7, 3.5, 32, 9), Block.box(12.5, 0, 7, 32, 32, 9));
-    protected static final VoxelShape OPEN_NS_3 = Shapes.or(Block.box(-16, 0, 7, -1, 32, 9), Block.box(17, 0, 7, 32, 32, 9));
-    protected static final VoxelShape OPEN_NS_4 = Shapes.or(Block.box(-16, 0, 7, -5.5, 32, 9), Block.box(21.5, 0, 7, 32, 32, 9));
-    protected static final VoxelShape OPEN_NS_5 = Shapes.or(Block.box(-16, 0, 7, -11.15, 32, 9), Block.box(27.15, 0, 7, 32, 32, 9));
-
-    protected static final VoxelShape OPEN_EW_1 = Shapes.or(Block.box(7, 0, 8, 9, 32, 32), Block.box(7, 0, -16, 9, 32, 8.0));
-    protected static final VoxelShape OPEN_EW_2 = Shapes.or(Block.box(7, 0, 12.5, 9, 32, 32), Block.box(7, 0, -16, 9, 32, 3.5));
-    protected static final VoxelShape OPEN_EW_3 = Shapes.or(Block.box(7, 0, 17, 9, 32, 32), Block.box(7, 0, -16, 9, 32, -1));
-    protected static final VoxelShape OPEN_EW_4 = Shapes.or(Block.box(7, 0, 21.5, 9, 32, 32), Block.box(7, 0, -16, 9, 32, -5.5));
-    protected static final VoxelShape OPEN_EW_5 = Shapes.or(Block.box(7, 0, 27.15, 9, 32, 32), Block.box(7, 0, -16, 9, 32, -11.15));
 
     protected BigSlidingDoorBlock(RegistryObject<BlockEntityType<BigSlidingDoorEntity>> registryObject) {
         super(Properties.copy(Blocks.STONE).noOcclusion());
@@ -68,7 +68,8 @@ public class BigSlidingDoorBlock extends BaseEntityBlock {
     @Override
     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos fromPos, boolean isMoving) {
         boolean xState = LocationUtil.getBigSlidingDoorRedstoneState(level, pos);
-        if (!state.getValue(REMOTED)) {
+        BigSlidingDoorEntity blockEntity = (BigSlidingDoorEntity) level.getBlockEntity(pos);
+        if (!state.getValue(REMOTED) && blockEntity.isOperable()) {
             level.setBlock(pos, state.setValue(POWERED, xState), 3);
         }
     }
@@ -81,39 +82,97 @@ public class BigSlidingDoorBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     @NotNull
     @Override
-    public VoxelShape getShape(@NotNull BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        Direction direction = state.getValue(FACING);
+    public InteractionResult use(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Player pPlayer, @NotNull InteractionHand pHand, @NotNull BlockHitResult pHit) {
+        ItemStack item = pPlayer.getItemInHand(InteractionHand.MAIN_HAND);
+        HashMap<Item, Integer> items = new HashMap<>();
+        Block[] blocks = {Blocks.STONE, Blocks.ANDESITE, Blocks.DIORITE, Blocks.GRANITE, Blocks.DEEPSLATE, Blocks.COBBLED_DEEPSLATE,
+                Blocks.CRACKED_DEEPSLATE_BRICKS, Blocks.CRACKED_DEEPSLATE_TILES, Blocks.DEEPSLATE_BRICKS, Blocks.DEEPSLATE_TILES,
+                Blocks.DEEPSLATE, Blocks.POLISHED_DEEPSLATE, Blocks.WHITE_CONCRETE, Blocks.GRAY_CONCRETE, Blocks.LIGHT_GRAY_CONCRETE,
+                Blocks.BLACK_CONCRETE, Blocks.RED_CONCRETE, Blocks.ORANGE_CONCRETE, Blocks.YELLOW_CONCRETE, Blocks.BLUE_CONCRETE,
+                Blocks.LIGHT_BLUE_CONCRETE, Blocks.BLUE_CONCRETE, Blocks.CYAN_CONCRETE, Blocks.GREEN_CONCRETE, Blocks.PURPLE_CONCRETE,
+                Blocks.PINK_CONCRETE, Blocks.MAGENTA_CONCRETE, Blocks.BROWN_CONCRETE, Blocks.OAK_PLANKS, Blocks.SPRUCE_PLANKS, Blocks.BIRCH_PLANKS,
+                Blocks.DARK_OAK_PLANKS, Blocks.JUNGLE_PLANKS, Blocks.MANGROVE_PLANKS, Blocks.WARPED_PLANKS, Blocks.CRIMSON_PLANKS, Blocks.ACACIA_PLANKS,
+                Blocks.WHITE_CONCRETE_POWDER, Blocks.GRAY_CONCRETE_POWDER, Blocks.LIGHT_GRAY_CONCRETE_POWDER, Blocks.BLACK_CONCRETE_POWDER,
+                Blocks.RED_CONCRETE_POWDER, Blocks.ORANGE_CONCRETE_POWDER, Blocks.YELLOW_CONCRETE_POWDER, Blocks.BLUE_CONCRETE_POWDER,
+                Blocks.LIGHT_BLUE_CONCRETE_POWDER, Blocks.BLUE_CONCRETE_POWDER, Blocks.CYAN_CONCRETE_POWDER, Blocks.GREEN_CONCRETE_POWDER,
+                Blocks.PURPLE_CONCRETE_POWDER, Blocks.PINK_CONCRETE_POWDER, Blocks.MAGENTA_CONCRETE_POWDER, Blocks.BROWN_CONCRETE_POWDER,
+                Blocks.MUD, Blocks.CALCITE, Blocks.SMOOTH_SANDSTONE, Blocks.SMOOTH_RED_SANDSTONE,
+                Blocks.WHITE_TERRACOTTA, Blocks.GRAY_TERRACOTTA, Blocks.LIGHT_GRAY_TERRACOTTA, Blocks.BLACK_TERRACOTTA,
+                Blocks.RED_TERRACOTTA, Blocks.ORANGE_TERRACOTTA, Blocks.YELLOW_TERRACOTTA, Blocks.BLUE_TERRACOTTA,
+                Blocks.LIGHT_BLUE_TERRACOTTA, Blocks.BLUE_TERRACOTTA, Blocks.CYAN_TERRACOTTA, Blocks.GREEN_TERRACOTTA,
+                Blocks.PURPLE_TERRACOTTA, Blocks.PINK_TERRACOTTA, Blocks.MAGENTA_TERRACOTTA, Blocks.BROWN_TERRACOTTA };
+        for (int i = 0; i < blocks.length; i++) {
+            items.put(blocks[i].asItem(), i);
+        }
+        if (pHand == InteractionHand.MAIN_HAND) {
+            if (items.containsKey(item.getItem())) {
+                BigSlidingDoorEntity blockEntity = (BigSlidingDoorEntity) pLevel.getBlockEntity(pPos);
+                if (blockEntity.getStyle() != (byte) items.get(item.getItem()).intValue()) {
+                    if (!pLevel.isClientSide) {
+                        blockEntity.setStyle((byte) items.get(item.getItem()).intValue());
+                        blockEntity.setChanged();
+                        item.shrink(1);
+                        if (item.getCount() > 0)
+                            pPlayer.setItemInHand(InteractionHand.MAIN_HAND, item);
+                    } else {
+                        Block blockItem = ((BlockItem) item.getItem()).getBlock();
+                        pLevel.playSound(pPlayer, pPos.getX() + 0.5, pPos.getY() + 0.5, pPos.getZ() + 0.5,
+                                blockItem.getSoundType(blockItem.defaultBlockState()).getPlaceSound(), SoundSource.BLOCKS, 1f, 1f);
+                        pPlayer.swing(InteractionHand.MAIN_HAND);
+                    }
+                    return InteractionResult.CONSUME;
+                }
+            }
+        }
+        return super.use(pState, pLevel, pPos, pPlayer, pHand, pHit);
+    }
+
+    @SuppressWarnings("deprecation")
+    @NotNull
+    @Override
+    public VoxelShape getShape(@NotNull BlockState bstate, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
+        Direction direction = bstate.getValue(FACING);
         if (!(level.getBlockEntity(pos) instanceof BigSlidingDoorEntity blockEntity)) return Shapes.empty();
+        CompoundTag tagDoor = new CompoundTag();
+        blockEntity.saveAdditional(tagDoor);
         CompoundTag tag = new CompoundTag();
         blockEntity.saveAdditional(tag);
 
         if (direction == Direction.NORTH || direction == Direction.SOUTH) {
-            switch (tag.getByte("state")) {
-                case 1:
-                    return OPEN_NS_1;
-                case 2:
-                    return OPEN_NS_2;
-                case 3:
-                    return OPEN_NS_3;
-                case 4:
-                    return OPEN_NS_4;
-                case 5:
-                    return OPEN_NS_5;
+            byte state = tagDoor.getByte("state");
+            if (blockEntity.isLast()) {
+                if (state >= 20) {
+                    if (state == 38)
+                        return Shapes.or(Block.box(-16, 0, 7, -11.15, 32, 9), Block.box(27.15, 0, 7, 32, 32, 9));
+                    return Shapes.or(Block.box(-16, 0, 7, 8 - ((state - 20) * 1.12), 32, 9), Block.box(8 + ((state - 20) * 1.12), 0, 7, 32, 32, 9));
+                } else {
+                    return Shapes.or(Block.box(-16, 0, 7, 8, 32, 9), Block.box(8, 0, 7, 32, 32 , 9));
+                }
+            } else {
+                if (state <= 18)
+                    return Shapes.or(Block.box(-16, 0, 7, -11.15 + (state * 1.12), 32, 9), Block.box(27.15 - (state * 1.12), 0, 7, 32, 32, 9));
+                else
+                    return Shapes.or(Block.box(-16, 0, 7, 8, 32, 9), Block.box(8, 0, 7, 32, 32, 9));
             }
         }
-        switch (tag.getByte("state")) {
-            case 1:
-                return OPEN_EW_1;
-            case 2:
-                return OPEN_EW_2;
-            case 3:
-                return OPEN_EW_3;
-            case 4:
-                return OPEN_EW_4;
-            case 5:
-                return OPEN_EW_5;
+
+
+        byte state = tagDoor.getByte("state");
+        if (blockEntity.isLast()) {
+            if (state >= 20) {
+                if (state == 38)
+                    return Shapes.or(Block.box(7, 0, 27.15, 9, 32, 32), Block.box(7, 0, -16, 9, 32, -11.15));
+                return Shapes.or(Block.box(7, 0, 8 + ((state - 20) * 1.12), 9, 32, 32), Block.box(7, 0, -16, 9, 32, 8.0 - ((state - 20) * 1.12)));
+            } else {
+                return Shapes.or(Block.box(7, 0, 8, 9, 32, 32), Block.box(7, 0, -16, 9, 32, 8.0));
+            }
+
+        } else {
+            if (state <= 18)
+                return Shapes.or(Block.box(7, 0, 8 - ((state - 20) * 1.12), 9, 32, 32), Block.box(7, 0, -16, 9, 32, 8.0 + ((state - 20) * 1.12)));
+            else
+                return Shapes.or(Block.box(7, 0, 8, 9, 32, 32), Block.box(7, 0, -16, 9, 32, 8.0));
         }
-        return Shapes.empty();
     }
 
     @SuppressWarnings("deprecation")
@@ -130,16 +189,11 @@ public class BigSlidingDoorBlock extends BaseEntityBlock {
 
     @Override
     public void appendHoverText(@NotNull ItemStack stack, @Nullable BlockGetter level, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag flag) {
-
-        tooltipComponents.add(Component.translatable("item.redwiredoors.tooltip.big_sliding_door.size").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
-        tooltipComponents.add(Component.literal(""));
-        tooltipComponents.add(Component.translatable("item.redwiredoors.tooltip.big_sliding_door.controllableby").setStyle(Style.EMPTY.withColor(ChatFormatting.GRAY)));
-        tooltipComponents.add(TextComponentUtil.getTComp("tooltip.big_sliding_door.information_1", false, ChatFormatting.DARK_RED));
-        tooltipComponents.add(TextComponentUtil.getTComp("tooltip.big_sliding_door.information_2", false, ChatFormatting.DARK_RED));
-        tooltipComponents.add(TextComponentUtil.getTComp("tooltip.big_sliding_door.information_3", false, ChatFormatting.DARK_RED));
-        tooltipComponents.add(Component.literal(" "));
-        tooltipComponents.add(TextComponentUtil.getTComp("tooltip.big_sliding_door.information_4", false, ChatFormatting.DARK_RED));
-
+        tooltipComponents.add(Component.literal("This animated door can be camouflaged.").setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW)));
+        tooltipComponents.add(Component.literal("Wireless Controllable: ").setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW))
+                .append(Component.literal("Yes").setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
+        tooltipComponents.add(Component.literal("Size: ").setStyle(Style.EMPTY.withColor(ChatFormatting.YELLOW))
+                .append(Component.literal("3x2x1 (WxHxD)").setStyle(Style.EMPTY.withColor(ChatFormatting.GREEN))));
         super.appendHoverText(stack, level, tooltipComponents, flag);
     }
 

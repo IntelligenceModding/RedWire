@@ -1,3 +1,6 @@
-// 1.19.2	2022-10-31T13:39:28.3404646	Item Models: redwiredoors
-ab19b1afeeed65ff3d6e0d44c16e37379c3b0f61 assets/redwiredoors/models/item/stone_big_sliding_door.json
-9d5f5be74d0df9e1015b99447231c28c0d8e4de4 assets/redwiredoors/models/item/stone_player_sensor_block.json
+// 1.19.2	2022-11-06T17:34:49.762477	Item Models: redwiredoors
+490c2ae307d397fc69e587716420dd58020f2566 assets/redwiredoors/models/item/big_sliding_door.json
+10c8c8e76f9ac0f49f30a47f6d24c942ede6e9c4 assets/redwiredoors/models/item/black_player_sensor_block.json
+6c53b1a6ed28929b7a0a090edf6101e610f842fc assets/redwiredoors/models/item/bounding.json
+55ef61aa7278b06e6206fb3aad32b28ec6cc2184 assets/redwiredoors/models/item/gray_player_sensor_block.json
+030305e466db26770492d478faf0ba612a63c5f7 assets/redwiredoors/models/item/white_player_sensor_block.json

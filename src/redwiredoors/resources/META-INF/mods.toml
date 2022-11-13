@@ -4,7 +4,7 @@ license = "All Rights Reserved"
 
 [[mods]]
 modId = "redwiredoors"
-version = "1.0r"
+version = "${file.jarVersion}"
 displayName = "RedWire: Doors"
 displayURL = "https://www.curseforge.com/minecraft/mc-mods/redwire-doors"
 logoFile = "logo.png"
@@ -21,7 +21,14 @@ side = "BOTH"
 [[dependencies.redwiredoors]]
 modId = "redwirecore"
 mandatory = true
-versionRange = "[1.0,)"
+versionRange = "[1.2,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.redwiredoors]]
+modId = "geckolib3"
+mandatory = true
+versionRange = "[3.1.31,)"
 ordering = "NONE"
 side = "BOTH"
 

@@ -23,8 +23,11 @@ public class ModelAndBlockStatesProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        bigSlidingDoorBlock(ModBlocks.STONE_BIG_SLIDING_DOOR.get(), new ResourceLocation("block/stone"));
-        playerSensorBlock(ModBlocks.STONE_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation("block/stone"));
+        bigSlidingDoorBlock(ModBlocks.BIG_SLIDING_DOOR.get(), new ResourceLocation("block/stone"));
+        playerSensorBlock(ModBlocks.WHITE_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation(RedwireDoors.MOD_ID, "block/white"));
+        playerSensorBlock(ModBlocks.GRAY_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation(RedwireDoors.MOD_ID, "block/gray"));
+        playerSensorBlock(ModBlocks.BLACK_PLAYER_SENSOR_BLOCK.get(), new ResourceLocation(RedwireDoors.MOD_ID, "block/black"));
+        //simpleBlock(ModBlocks.BOUNDING.get(), new ConfiguredModel(models().withExistingParent(ItemUtil.getRegString(ModBlocks.BOUNDING.get()), new ResourceLocation("block/air")).texture("all", "block/empty").texture("particle", "block/empty")));
 
     }
 

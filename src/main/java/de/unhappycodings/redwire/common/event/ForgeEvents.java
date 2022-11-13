@@ -9,14 +9,22 @@ import com.mojang.math.Matrix4f;
 import de.unhappycodings.redwire.RedwireCore;
 import de.unhappycodings.redwire.common.config.CommonConfig;
 import de.unhappycodings.redwire.common.item.LinkingCardItem;
+import de.unhappycodings.redwire.common.registration.Registration;
 import de.unhappycodings.redwire.common.util.NbtUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -63,7 +71,7 @@ public class ForgeEvents {
                 float z = (float) (-cameraPos.z + posToRenderSquareAt.getZ());
 
                 Color color = Color.decode(CommonConfig.LINKING_TOOL_OVERLAY_COLOR.get());
-
+                // RGB Rendering Easter Egg
                 if (CommonConfig.LINKING_TOOL_OVERLAY_RAINBOW.get()) {
                     if (!countFirst) {
                         rgbColour[0]--;
@@ -85,12 +93,16 @@ public class ForgeEvents {
                     }
                     color = new Color(rgbColour[0], rgbColour[1], rgbColour[2]);
                 }
+                float r = color.getRed() / 255f;
+                float g = color.getGreen() / 255f;
+                float b = color.getBlue() / 255f;
+                float a = 0.5f;
+                float offset = 0;
 
-                //TODO: ADD RENDERING FOR DOORS!
-                /*
+                TagKey<Block> doorControllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwiredoors:doors/controllable"));
                 BlockState blockState = minecraft.level.getBlockState(new BlockPos(posToRenderSquareAt.getX(), posToRenderSquareAt.getY(), posToRenderSquareAt.getZ()));
-                if (blockState.getBlock() instanceof BigSlidingDoorBlock) {
-                    if (blockState.getValue(BigSlidingDoorBlock.FACING) == Direction.NORTH || blockState.getValue(BigSlidingDoorBlock.FACING) == Direction.SOUTH) {
+                if (blockState.is(doorControllables)) {
+                    if (blockState.getValue(HorizontalDirectionalBlock.FACING) == Direction.NORTH || blockState.getValue(HorizontalDirectionalBlock.FACING) == Direction.SOUTH) {
                         // Down
                         buffer.vertex(matrix, x + -1, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
                         buffer.vertex(matrix, x + 2, y + 0, z + 0.4375f).color(r, g, b, a).endVertex();
@@ -153,51 +165,43 @@ public class ForgeEvents {
                         buffer.vertex(matrix, x + 0.5625f, y + 0, z + 2).color(r, g, b, a).endVertex();
                         buffer.vertex(matrix, x + 0.4375f, y + 0, z + 2).color(r, g, b, a).endVertex();
                     }
+                } else {
+                    // Down
+                    buffer.vertex(matrix, x + 0, y + 0 - offset, z + 0).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 0 - offset, z + 0).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 0 - offset, z + 1).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 0, y + 0 - offset, z + 1).color(r, g, b, a).endVertex();
+
+                    // Up
+                    buffer.vertex(matrix, x + 0, y + 1 + offset, z + 0).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 0, y + 1 + offset, z + 1).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 1 + offset, z + 1).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 1 + offset, z + 0).color(r, g, b, a).endVertex();
+
+                    // North
+                    buffer.vertex(matrix, x + 0, y + 1, z + 0 - offset).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 1, z + 0 - offset).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 0, z + 0 - offset).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 0, y + 0, z + 0 - offset).color(r, g, b, a).endVertex();
+
+                    // South
+                    buffer.vertex(matrix, x + 0, y + 1, z + 1 + offset).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 0, y + 0, z + 1 + offset).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 0, z + 1 + offset).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1, y + 1, z + 1 + offset).color(r, g, b, a).endVertex();
+
+                    // East
+                    buffer.vertex(matrix, x + 0 - offset, y + 1, z + 0).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 0 - offset, y + 0, z + 0).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 0 - offset, y + 0, z + 1).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 0 - offset, y + 1, z + 1).color(r, g, b, a).endVertex();
+
+                    // West
+                    buffer.vertex(matrix, x + 1 + offset, y + 1, z + 0).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1 + offset, y + 1, z + 1).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1 + offset, y + 0, z + 1).color(r, g, b, a).endVertex();
+                    buffer.vertex(matrix, x + 1 + offset, y + 0, z + 0).color(r, g, b, a).endVertex();
                 }
-                 */
-
-                float r = color.getRed() / 255f;
-                float g = color.getGreen() / 255f;
-                float b = color.getBlue() / 255f;
-                float a = 0.5f;
-                float offset = 0;
-
-                // Down
-                buffer.vertex(matrix, x + 0, y + 0 - offset, z + 0).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 0 - offset, z + 0).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 0 - offset, z + 1).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 0, y + 0 - offset, z + 1).color(r, g, b, a).endVertex();
-
-                // Up
-                buffer.vertex(matrix, x + 0, y + 1 + offset, z + 0).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 0, y + 1 + offset, z + 1).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 1 + offset, z + 1).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 1 + offset, z + 0).color(r, g, b, a).endVertex();
-
-                // North
-                buffer.vertex(matrix, x + 0, y + 1, z + 0 - offset).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 1, z + 0 - offset).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 0, z + 0 - offset).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 0, y + 0, z + 0 - offset).color(r, g, b, a).endVertex();
-
-                // South
-                buffer.vertex(matrix, x + 0, y + 1, z + 1 + offset).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 0, y + 0, z + 1 + offset).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 0, z + 1 + offset).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1, y + 1, z + 1 + offset).color(r, g, b, a).endVertex();
-
-                // East
-                buffer.vertex(matrix, x + 0 - offset, y + 1, z + 0).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 0 - offset, y + 0, z + 0).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 0 - offset, y + 0, z + 1).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 0 - offset, y + 1, z + 1).color(r, g, b, a).endVertex();
-
-                // West
-                buffer.vertex(matrix, x + 1 + offset, y + 1, z + 0).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1 + offset, y + 1, z + 1).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1 + offset, y + 0, z + 1).color(r, g, b, a).endVertex();
-                buffer.vertex(matrix, x + 1 + offset, y + 0, z + 0).color(r, g, b, a).endVertex();
-
                 tes.end();
                 RenderSystem.enableDepthTest();
                 RenderSystem.depthFunc(0x207);

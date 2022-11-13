@@ -1,4 +1,6 @@
-// 1.19.2	2022-10-31T13:27:41.447289	LootTables
+// 1.19.2	2022-10-31T20:24:55.7352324	LootTables
+2e928ebe4d2982bb2e7e6fb7844e2427b30ae021 data/redwiredoors/loot_tables/blocks/big_sliding_door.json
+0d04a856ba8b14feb051fa8b0ea7947d143735d3 data/redwiredoors/loot_tables/blocks/black_player_sensor_block.json
 b7762015ef14f3f499db8ba7121f6c37b249c48f data/redwiredoors/loot_tables/blocks/bounding.json
-2556d924307ecdb82575cf88cc589520edf3359b data/redwiredoors/loot_tables/blocks/stone_big_sliding_door.json
-267b4e384ecc96e54c5c9bfd49ce6c3dd62f60b0 data/redwiredoors/loot_tables/blocks/stone_player_sensor_block.json
+5a9b5e552ebaa886af8f1a28a2ba96c9fb020896 data/redwiredoors/loot_tables/blocks/gray_player_sensor_block.json
+d650242592dfc0aad4f76143a37c8e058bdce723 data/redwiredoors/loot_tables/blocks/white_player_sensor_block.json

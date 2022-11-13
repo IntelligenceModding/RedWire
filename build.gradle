@@ -36,6 +36,9 @@ sourceSets {
     redwiredoors {
         redwiredoors.resources.srcDirs += ['src/generated/resources/redwiredoors']
     }
+    redwirealloys {
+        redwirealloys.resources.srcDirs += ['src/generated/resources/redwirealloys']
+    }
 }
 
 configurations {
@@ -45,6 +48,9 @@ configurations {
     redwiredoorsImplementation.extendsFrom(implementation)
     redwiredoorsCompileOnly.extendsFrom(compileOnly)
     redwiredoorsRuntimeOnly.extendsFrom(runtimeOnly)
+    redwirealloysImplementation.extendsFrom(implementation)
+    redwirealloysCompileOnly.extendsFrom(compileOnly)
+    redwirealloysRuntimeOnly.extendsFrom(runtimeOnly)
 }
 
 minecraft {
@@ -52,7 +58,8 @@ minecraft {
 
     accessTransformers.from(file('src/redwirelampsandlighting/resources/META-INF/accesstransformer.cfg'),
             file('src/main/resources/META-INF/accesstransformer.cfg'),
-            file('src/redwiredoors/resources/META-INF/accesstransformer.cfg'))
+            file('src/redwiredoors/resources/META-INF/accesstransformer.cfg'),
+            file('src/redwirealloys/resources/META-INF/accesstransformer.cfg'))
 
     runs {
         client {
@@ -75,6 +82,9 @@ minecraft {
                 redwiredoors {
                     source sourceSets.redwiredoors
                 }
+                redwirealloys {
+                    source sourceSets.redwirealloys
+                }
             }
         }
 
@@ -94,6 +104,9 @@ minecraft {
                 }
                 redwiredoors {
                     source sourceSets.redwiredoors
+                }
+                redwirealloys {
+                    source sourceSets.redwirealloys
                 }
             }
         }
@@ -115,6 +128,9 @@ minecraft {
                 redwiredoors {
                     source sourceSets.redwiredoors
                 }
+                redwirealloys {
+                    source sourceSets.redwirealloys
+                }
             }
         }
 
@@ -125,7 +141,8 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
             args '--mod', 'redwirecore', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/'),
                     '--mod', 'redwirelampsandlighting', '--existing', file('src/redwirelampsandlighting/resources/'),
-                    '--mod', 'redwiredoors', '--existing', file('src/redwiredoors/resources/')
+                    '--mod', 'redwiredoors', '--existing', file('src/redwiredoors/resources/'),
+                    '--mod', 'redwirealloys', '--existing', file('src/redwirealloys/resources/')
 
             mods {
                 redwirecore {
@@ -137,6 +154,9 @@ minecraft {
                 redwiredoors {
                     source sourceSets.redwiredoors
                 }
+                redwirealloys {
+                    source sourceSets.redwirealloys
+                }
             }
         }
     }
@@ -145,6 +165,7 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources/redwirecore' }
 sourceSets.redwirelampsandlighting.resources { srcDir 'src/generated/resources/redwirelampsandlighting' }
 sourceSets.redwiredoors.resources { srcDir 'src/generated/resources/redwiredoors' }
+sourceSets.redwirealloys.resources { srcDir 'src/generated/resources/redwirealloys' }
 
 repositories {
     maven {
@@ -189,6 +210,10 @@ rootProject.tasks.named("processRedwiredoorsResources") {
     duplicatesStrategy = 'exclude'
 }
 
+rootProject.tasks.named("processRedwirealloysResources") {
+    duplicatesStrategy = 'exclude'
+}
+
 jar {
     duplicatesStrategy(DuplicatesStrategy.WARN)
     archiveFileName.set("RedWireCore-${project.version}.jar")
@@ -216,14 +241,25 @@ task redwiredoorsJar(type: Jar) {
     afterEvaluate { finalizedBy reobfRedwiredoorsJar}
 }
 
+task redwirealloysJar(type: Jar) {
+    duplicatesStrategy(DuplicatesStrategy.WARN)
+    archiveFileName.set("RedWireAlloys-${project.version}.jar")
+    archiveClassifier.set("redwirealloys")
+    manifest.attributes(getManifest("RedWireAlloys"))
+    from sourceSets.redwirealloys.output
+    afterEvaluate { finalizedBy reobfRedwirealloysJar}
+}
+
 reobf {
     jar {classpath.from(sourceSets.main.compileClasspath)}
     redwirelampsandlightingJar {classpath.from(sourceSets.redwirelampsandlighting.compileClasspath)}
     redwiredoorsJar {classpath.from(sourceSets.redwiredoors.compileClasspath)}
+    redwirealloysJar {classpath.from(sourceSets.redwirealloys.compileClasspath)}
 }
 
 artifacts {
     archives jar
     archives redwirelampsandlightingJar
     archives redwiredoorsJar
+    archives redwirealloysJar
 }

@@ -1,7 +1,9 @@
 {
   "values": [
-    "redwiredoors:stone_big_sliding_door",
-    "redwiredoors:stone_player_sensor_block",
+    "redwiredoors:big_sliding_door",
+    "redwiredoors:white_player_sensor_block",
+    "redwiredoors:gray_player_sensor_block",
+    "redwiredoors:black_player_sensor_block",
     "redwiredoors:bounding"
   ]
 }

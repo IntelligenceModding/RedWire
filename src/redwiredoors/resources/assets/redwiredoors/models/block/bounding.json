@@ -1,0 +1,6 @@
+{
+  "textures": {
+    "all": "redwiredoors:block/empty",
+    "particle": "redwiredoors:block/empty"
+  }
+}

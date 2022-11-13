@@ -1,0 +1,52 @@
+{
+  "variants": {
+    "facing=east,powered=false,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=east,powered=false,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=east,powered=true,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=east,powered=true,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=north,powered=false,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=north,powered=false,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=north,powered=true,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=north,powered=true,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=south,powered=false,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=south,powered=false,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=south,powered=true,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=south,powered=true,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=west,powered=false,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=west,powered=false,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=west,powered=true,remoted=false": {
+      "model": "redwiredoors:block/big_sliding_door"
+    },
+    "facing=west,powered=true,remoted=true": {
+      "model": "redwiredoors:block/big_sliding_door"
+    }
+  }
+}
