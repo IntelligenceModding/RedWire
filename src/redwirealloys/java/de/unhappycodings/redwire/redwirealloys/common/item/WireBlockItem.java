@@ -43,7 +43,8 @@ public class WireBlockItem extends BlockItem {
                     entity.setSides((byte) (sides + getSideValue(side)));
                     entity.setChanged();
                     ItemStack playerItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-                    player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(playerItem.getItem(), playerItem.getCount() -1));
+                    if (!player.isCreative())
+                        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(playerItem.getItem(), playerItem.getCount() -1));
                     level.sendBlockUpdated(context.getClickedPos(), level.getBlockState(context.getClickedPos()), level.getBlockState(context.getClickedPos()), Block.UPDATE_ALL);
                 }
                 level.playLocalSound(context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f, false);
@@ -53,12 +54,6 @@ public class WireBlockItem extends BlockItem {
             return InteractionResult.CONSUME;
         }
         return InteractionResult.CONSUME;
-    }
-
-    public void shrinkWireItem(Player player) {
-        ItemStack playerItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-        playerItem.shrink(1);
-        player.setItemInHand(InteractionHand.MAIN_HAND, playerItem);
     }
 
     public static ArrayList<String> getSides(byte sideValue) {

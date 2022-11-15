@@ -112,7 +112,8 @@ public class WireBlock extends BaseEntityBlock {
                 level.setBlock(pos, Blocks.AIR.defaultBlockState(), Block.UPDATE_ALL);
             }
             level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.STONE_BREAK, SoundSource.BLOCKS, 1.0f, 1.0f, false);
-            level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ModBlocks.RED_ALLOY_WIRE.get().asItem(), 1)));
+            if (!player.isCreative())
+                level.addFreshEntity(new ItemEntity(level, pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, new ItemStack(ModBlocks.RED_ALLOY_WIRE.get().asItem(), 1)));
         }
 
         return false;

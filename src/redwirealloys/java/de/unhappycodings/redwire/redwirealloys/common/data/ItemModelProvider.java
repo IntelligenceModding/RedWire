@@ -1,6 +1,7 @@
 package de.unhappycodings.redwire.redwirealloys.common.data;
 
 import de.unhappycodings.redwire.redwirealloys.RedwireAlloys;
+import de.unhappycodings.redwire.redwirealloys.common.block.ModBlocks;
 import de.unhappycodings.redwire.redwirealloys.common.util.ItemUtil;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -18,6 +19,7 @@ public class ItemModelProvider extends net.minecraftforge.client.model.generator
     @Override
     protected void registerModels() {
 
+        withExistingParent(Objects.requireNonNull(ItemUtil.getRegName(ModBlocks.RED_ALLOY_WIRE.get())).toString(), new ResourceLocation(RedwireAlloys.MOD_ID, "block/red_alloy_wire"));
     }
 
     private void simpleItem(Item item) {

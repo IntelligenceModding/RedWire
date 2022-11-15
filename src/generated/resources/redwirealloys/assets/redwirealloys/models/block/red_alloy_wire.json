@@ -1,0 +1,7 @@
+{
+  "parent": "redwirealloys:generation/wire",
+  "textures": {
+    "0": "redwirealloys:block/red_alloy_wire",
+    "particle": "redwirealloys:block/red_alloy_wire"
+  }
+}
