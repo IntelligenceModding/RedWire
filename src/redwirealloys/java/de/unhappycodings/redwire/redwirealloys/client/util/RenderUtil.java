@@ -124,6 +124,7 @@ public class RenderUtil {
         float v2 = stillTexture.getV(pHeight);
         float offset = -0.625f;
 
+
         if (perspective == Perspective.UP) {
             buffer.vertex(matrix4f, -sX + pX + offset, sY + pY + offset, sZ + pZ + offset).color(1, 1, 1, 1f).uv(u1, v2).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();
             buffer.vertex(matrix4f, sX + pX + offset, sY + pY + offset, sZ + pZ + offset).color(1, 1, 1, 1f).uv(u1, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();

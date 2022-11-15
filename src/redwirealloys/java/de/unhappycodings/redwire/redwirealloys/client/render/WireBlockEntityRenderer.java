@@ -48,6 +48,7 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
 
         if (sides.contains("down")) {
 
+
             RenderUtil.drawBox(poseStack, boxVertexConsumer, new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),10, 10, 10, 10, 10, 10, 0, 0, 16, 16);
 
 
