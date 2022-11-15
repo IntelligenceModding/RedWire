@@ -2,16 +2,20 @@ package de.unhappycodings.redwire.redwirealloys.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix4f;
 import de.unhappycodings.redwire.redwirealloys.RedwireAlloys;
 import de.unhappycodings.redwire.redwirealloys.client.util.RenderUtil;
 import de.unhappycodings.redwire.redwirealloys.common.blockentity.WireBlockEntity;
 import de.unhappycodings.redwire.redwirealloys.common.item.WireBlockItem;
 import net.minecraft.Util;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -40,16 +44,67 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
     @Override
     public void render(@NotNull WireBlockEntity entity, float pPartialTick, @NotNull PoseStack poseStack, @NotNull MultiBufferSource bufferSource, int pPackedLight, int pPackedOverlay) {
         ArrayList<String> sides = WireBlockItem.getSides(entity.getSides());
-        VertexConsumer boxVertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(TextureAtlas.LOCATION_BLOCKS));
-        System.out.println(sides);
+        VertexConsumer boxVertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire")));
+
         if (sides.contains("down")) {
-            poseStack.pushPose();
 
-            RenderUtil.drawPlane(poseStack, boxVertexConsumer, new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), RenderUtil.Perspective.UP, 0.0625f * 7, 0.0625f, 0.0625f * 7, -0.0625f * 7, 0.0625f, -0.0625f * 7, 0, 0, 2, 2, 0.0625f * 7, 0.0625f * 7);
-            //TODO: RENDER STUFF
+            RenderUtil.drawBox(poseStack, boxVertexConsumer, new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),10, 10, 10, 10, 10, 10, 0, 0, 16, 16);
 
-            poseStack.popPose();
+
         }
+    }
+
+
+    public static void drawBox(PoseStack stack, VertexConsumer buffer, ResourceLocation texture,
+            float x, float y, float z, float sizeWidth, float sizeHeight, float sizeDepth) {
+        Matrix4f matrix4f = stack.last().pose();
+
+        TextureAtlasSprite stillTexture = Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(texture);
+
+        float u1 = stillTexture.getU(0); // Offset
+        float u2 = stillTexture.getU(16);   // Height
+        float v1 = stillTexture.getV(0); // Offset
+        float v2 = stillTexture.getV(16);  // Height
+
+        stack.pushPose();
+
+        // Down
+        buffer.vertex(matrix4f, x + 0, y + 0, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 0, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 0, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 0, y + 0, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+
+        // Up
+        buffer.vertex(matrix4f, x + 0, y + 1, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 0, y + 1, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 1, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 1, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+
+        // North
+        buffer.vertex(matrix4f, x + 0, y + 1, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 1, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 0, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 0, y + 0, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+
+        // South
+        buffer.vertex(matrix4f, x + 0, y + 1, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 0, y + 0, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 0, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 1, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+
+        // East
+        buffer.vertex(matrix4f, x + 0, y + 1, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 0, y + 0, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 0, y + 0, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 0, y + 1, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+
+        // West
+        buffer.vertex(matrix4f, x + 1, y + 1, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 1, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 0, z + 1).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+        buffer.vertex(matrix4f, x + 1, y + 0, z + 0).color(WireBlockEntityRenderer.getColorForPower(15)).uv(u1, v2).endVertex();
+
+        stack.popPose();
     }
 
     public static int getColorForPower(int pPower) {
