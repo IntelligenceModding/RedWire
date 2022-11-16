@@ -59,12 +59,6 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
                     if (direction == Direction.EAST) drawBox(poseStack, boxVertexConsumer, getColorForPower(0), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),12.5f, 1, 8, 7, 2, 2, 0, 0, 2, 7);
                     if (direction == Direction.SOUTH) drawBox(poseStack, boxVertexConsumer, getColorForPower(0), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),8, 1, 12.5f, 2, 2, 7, 0, 0, 7, 2);
                     if (direction == Direction.WEST) drawBox(poseStack, boxVertexConsumer, getColorForPower(0), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),3.5f, 1, 8, 7, 2, 2, 0, 0, 2, 7);
-
-                    //drawBox(poseStack, boxVertexConsumer, getColorForPower(15), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),8, 1, 12.5f, 2, 2, 7, 0, 0, 7, 2);
-                    //drawBox(poseStack, boxVertexConsumer, getColorForPower(15), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),8, 1, 3.5f, 2, 2, 7, 0, 0, 7, 2);
-                    //drawBox(poseStack, boxVertexConsumer, getColorForPower(15), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),12.5f, 1, 8, 7, 2, 2, 0, 0, 2, 7); // EAST
-                    //drawBox(poseStack, boxVertexConsumer, getColorForPower(15), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),3.5f, 1, 8, 7, 2, 2, 0, 0, 2, 7);
-
                 }
             }
         }

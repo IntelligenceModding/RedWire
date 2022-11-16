@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -32,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class WireBlock extends BaseEntityBlock {
     protected static final VoxelShape SHAPE_DOWN = Block.box(0, 0, 0, 16, 2, 16);
@@ -80,6 +83,19 @@ public class WireBlock extends BaseEntityBlock {
             }
         }
         return Shapes.empty();
+    }
+
+    public static int ABO = 1;
+    public static int BEL = 2;
+    public static int NOR = 4;
+    public static int EAS = 8;
+    public static int SOU = 16;
+    public static int WES = 32;
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos fromPos, boolean moving) {
+        super.neighborChanged(state, level, pos, block, fromPos, moving);
     }
 
     @Override

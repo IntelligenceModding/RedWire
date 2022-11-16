@@ -51,6 +51,7 @@ public class WireBlockItem extends BlockItem {
                 player.swing(InteractionHand.MAIN_HAND);
                 return InteractionResult.CONSUME;
             }
+
             return InteractionResult.CONSUME;
         }
         return InteractionResult.CONSUME;

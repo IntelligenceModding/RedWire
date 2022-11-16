@@ -1,6 +1,7 @@
 package de.unhappycodings.redwire.redwirealloys.common;
 
 import de.unhappycodings.redwire.redwirealloys.RedwireAlloys;
+import de.unhappycodings.redwire.redwirealloys.common.block.ModBlocks;
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
@@ -19,7 +20,7 @@ public class ItemCreativeTab extends CreativeModeTab {
 
     @Override
     public @NotNull ItemStack makeIcon() {
-        return new ItemStack(Blocks.STONE);
+        return new ItemStack(ModBlocks.RED_ALLOY_WIRE.get());
     }
 
     @Override
@@ -27,7 +28,7 @@ public class ItemCreativeTab extends CreativeModeTab {
         int index = 0;
 
         ArrayList<Block> blockList = new ArrayList<>();
-        Collections.addAll(blockList, Blocks.STONE);
+        Collections.addAll(blockList, ModBlocks.RED_ALLOY_WIRE.get());
 
         for (Block i : blockList) {
             items.add(index, new ItemStack(i));
