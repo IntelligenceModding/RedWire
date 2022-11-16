@@ -1,6 +1,7 @@
 package de.unhappycodings.redwire.redwirealloys.common.item;
 
 import de.unhappycodings.redwire.redwirealloys.common.blockentity.WireBlockEntity;
+import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -23,6 +24,15 @@ public class WireBlockItem extends BlockItem {
     public static final byte SOUTH = 16;
     public static final byte WEST = 32;
     public static final byte ALL_OPTS = 63;
+
+
+    public static int ABO = 1;
+    public static int BEL = 2;
+    public static int NOR = 4;
+    public static int EAS = 8;
+    public static int SOU = 16;
+    public static int WES = 32;
+
 
     public WireBlockItem(Block pBlock) {
         super(pBlock, new Properties());
@@ -49,9 +59,7 @@ public class WireBlockItem extends BlockItem {
                 }
                 level.playLocalSound(context.getClickedPos().getX(), context.getClickedPos().getY(), context.getClickedPos().getZ(), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f, false);
                 player.swing(InteractionHand.MAIN_HAND);
-                return InteractionResult.CONSUME;
             }
-
             return InteractionResult.CONSUME;
         }
         return InteractionResult.CONSUME;

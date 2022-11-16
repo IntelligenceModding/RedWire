@@ -85,13 +85,6 @@ public class WireBlock extends BaseEntityBlock {
         return Shapes.empty();
     }
 
-    public static int ABO = 1;
-    public static int BEL = 2;
-    public static int NOR = 4;
-    public static int EAS = 8;
-    public static int SOU = 16;
-    public static int WES = 32;
-
     @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos fromPos, boolean moving) {
@@ -100,7 +93,6 @@ public class WireBlock extends BaseEntityBlock {
 
     @Override
     public boolean onDestroyedByPlayer(BlockState state, Level level, BlockPos pos, Player player, boolean willHarvest, FluidState fluid) {
-        System.out.println(level.isClientSide);
         double range = Minecraft.getInstance().player.getAttributeValue(ForgeMod.REACH_DISTANCE.get());
         Vec3 origin = Minecraft.getInstance().player.getEyePosition();
         Vec3 look = Minecraft.getInstance().player.getLookAngle();
@@ -119,7 +111,6 @@ public class WireBlock extends BaseEntityBlock {
         String side = direction.getName();
         byte sides = entity.getSides();
         if (WireBlockItem.getSides(sides).contains(side)) {
-            System.out.println(sides - WireBlockItem.getSideValue(side));
             if ((sides - WireBlockItem.getSideValue(side)) > 0) {
                 entity.setSides((byte) (sides - WireBlockItem.getSideValue(side)));
                 entity.setChanged();
