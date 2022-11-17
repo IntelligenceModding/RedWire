@@ -52,14 +52,32 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
         VertexConsumer boxVertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(TextureAtlas.LOCATION_BLOCKS));
         Direction[] directions = {Direction.UP, Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
 
+        int power = 0;
+
         for (Direction direction : directions) {
             if (sides.contains("down")) {
-                renderConnections(poseStack, boxVertexConsumer, direction, entity, "down", 15);
-                drawBox(poseStack, boxVertexConsumer, getColorForPower(15), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 1, 8, 2, 2, 2, 0, 0, 2, 2);
+                renderConnections(poseStack, boxVertexConsumer, direction, entity, "down", power);
+                drawBox(poseStack, boxVertexConsumer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 1, 8, 2, 2, 2, 0, 0, 2, 2);
             }
             if (sides.contains("up")) {
-                renderConnections(poseStack, boxVertexConsumer, direction, entity, "up", 15);
-                drawBox(poseStack, boxVertexConsumer, getColorForPower(15), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 15, 8, 2, 2, 2, 0, 0, 2, 2);
+                renderConnections(poseStack, boxVertexConsumer, direction, entity, "up", power);
+                drawBox(poseStack, boxVertexConsumer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 15, 8, 2, 2, 2, 0, 0, 2, 2);
+            }
+            if (sides.contains("north")) {
+                renderConnections(poseStack, boxVertexConsumer, direction, entity, "north", power);
+                drawBox(poseStack, boxVertexConsumer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 8, 1, 2, 2, 2, 0, 0, 2, 2);
+            }
+            if (sides.contains("east")) {
+                renderConnections(poseStack, boxVertexConsumer, direction, entity, "east", power);
+                drawBox(poseStack, boxVertexConsumer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 15, 8, 8, 2, 2, 2, 0, 0, 2, 2);
+            }
+            if (sides.contains("south")) {
+                renderConnections(poseStack, boxVertexConsumer, direction, entity, "south", power);
+                drawBox(poseStack, boxVertexConsumer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 8, 15, 2, 2, 2, 0, 0, 2, 2);
+            }
+            if (sides.contains("west")) {
+                renderConnections(poseStack, boxVertexConsumer, direction, entity, "west", power);
+                drawBox(poseStack, boxVertexConsumer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 1, 8, 8, 2, 2, 2, 0, 0, 2, 2);
             }
         }
 
@@ -68,23 +86,63 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
 
     public static void renderConnections(PoseStack stack, VertexConsumer buffer, Direction direction, WireBlockEntity entity, String side, int power) {
         BlockState currentBlockState = entity.getLevel().getBlockState(entity.getBlockPos().relative(direction));
+        ArrayList<String> mainSides = WireBlockItem.getSides(entity.getSides());
         ArrayList<String> currentSides = new ArrayList<>();
         if (currentBlockState.is(ModBlocks.RED_ALLOY_WIRE.get())) {
             currentSides = WireBlockItem.getSides(((WireBlockEntity) entity.getLevel().getBlockEntity(entity.getBlockPos().relative(direction))).getSides());
         }
         if (currentBlockState.canRedstoneConnectTo(entity.getLevel(), entity.getBlockPos(), direction) && (!currentSides.isEmpty() && currentSides.contains(side))) {
-            if (side.contains("up")) {
-                if (direction == Direction.NORTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 15, 3.5f, 2, 2, 7, 0, 0, 7, 2);
-                if (direction == Direction.EAST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 12.5f, 15, 8, 7, 2, 2, 0, 0, 2, 7);
-                if (direction == Direction.SOUTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, 15, 12.5f, 2, 2, 7, 0, 0, 7, 2);
-                if (direction == Direction.WEST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 3.5f, 15, 8, 7, 2, 2, 0, 0, 2, 7);
+            if (side.contains("up") || side.contains("down")) {
+                if (direction == Direction.NORTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, side.contains("up") ? 15f : 1f, 3.5f, 2, 2, 7, 0, 0, 7, 2);
+                if (direction == Direction.EAST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 12.5f, side.contains("up") ? 15f : 1f, 8, 7, 2, 2, 0, 0, 2, 7);
+                if (direction == Direction.SOUTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, side.contains("up") ? 15f : 1f, 12.5f, 2, 2, 7, 0, 0, 7, 2);
+                if (direction == Direction.WEST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 3.5f, side.contains("up") ? 15f : 1f, 8, 7, 2, 2, 0, 0, 2, 7);
             }
-            if (side.contains("down")) {
-                if (direction == Direction.NORTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),8, 1, 3.5f, 2, 2, 7, 0, 0, 7, 2);
-                if (direction == Direction.EAST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),12.5f, 1, 8, 7, 2, 2, 0, 0, 2, 7);
-                if (direction == Direction.SOUTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),8, 1, 12.5f, 2, 2, 7, 0, 0, 7, 2);
-                if (direction == Direction.WEST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),3.5f, 1, 8, 7, 2, 2, 0, 0, 2, 7);
+            if (side.contains("south") || side.contains("north")) {
+                if (direction == Direction.UP) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),8f, 12.5f, side.contains("south") ? 15f : 1f, 2, 7, 2, 0, 0, 7, 2);
+                if (direction == Direction.DOWN) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),8f, 3.5f, side.contains("south") ? 15f : 1f, 2, 7, 2, 0, 0, 7, 2);
+                if (direction == Direction.EAST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),12.5f, 8, side.contains("south") ? 15f : 1f, 7, 2, 2, 0, 0, 2, 7);
+                if (direction == Direction.WEST) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"),3.5f, 8, side.contains("south") ? 15f : 1f, 7, 2, 2, 0, 0, 2, 7);
             }
+            if (side.contains("east") || side.contains("west")) {
+                if (direction == Direction.UP) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), side.contains("east") ? 15f : 1f, 12.5f, 8f, 2, 7, 2, 0, 0, 2, 7);
+                if (direction == Direction.DOWN) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), side.contains("east") ? 15f : 1f, 3.5f, 8f, 2, 7, 2, 0, 0, 2, 7);
+                if (direction == Direction.NORTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), side.contains("east") ? 15f : 1f, 8, 3.5f, 2, 2, 7, 0, 0, 7, 2);
+                if (direction == Direction.SOUTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), side.contains("east") ? 15f : 1f, 8, 12.5f, 2, 2, 7, 0, 0, 7, 2);
+            }
+        }
+
+        if (mainSides.contains("west") && mainSides.contains("south")) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 1f, 8, 12.5f, 2, 2, 7, 0, 0, 7, 2);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 4.5f, 8, 15f, 5, 2, 2, 0, 0, 2, 7);
+        }
+        if (mainSides.contains("west") && mainSides.contains("north")) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 1f, 8, 3.5f, 2, 2, 7, 0, 0, 7, 2);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 4.5f, 8, 1f, 5, 2, 2, 0, 0, 2, 7);
+        }
+        if (mainSides.contains("east") && mainSides.contains("north")) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 15f, 8, 3.5f, 2, 2, 7, 0, 0, 7, 2);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 11.5f, 8, 1f, 5, 2, 2, 0, 0, 2, 7);
+        }
+        if (mainSides.contains("east") && mainSides.contains("south")) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 15f, 8, 12.5f, 2, 2, 7, 0, 0, 7, 2);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 11.5f, 8, 15f, 5, 2, 2, 0, 0, 2, 7);
+        }
+        if (mainSides.contains("north") && (mainSides.contains("up") || mainSides.contains("down"))) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8f, mainSides.contains("up") ? 12.5f : 3.5f, 1f, 2, 7, 2, 0, 0, 5, 2);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8f, mainSides.contains("up") ? 15f : 1f, 4.5f, 2, 2, 5, 0, 0, 5, 2);
+        }
+        if (mainSides.contains("east") && (mainSides.contains("up") || mainSides.contains("down"))) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 15f, mainSides.contains("up") ? 12.5f : 3.5f, 8f, 2, 7, 2, 0, 0, 2, 5);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 11.5f, mainSides.contains("up") ? 15f : 1f, 8f, 5, 2, 2, 0, 0, 5, 2);
+        }
+        if (mainSides.contains("south") && (mainSides.contains("up") || mainSides.contains("down"))) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8f, mainSides.contains("up") ? 12.5f : 3.5f, 15f, 2, 7, 2, 0, 0, 5, 2);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8f, mainSides.contains("up") ? 15f : 1f, 11.5f, 2, 2, 5, 0, 0, 5, 2);
+        }
+        if (mainSides.contains("west") && (mainSides.contains("up") || mainSides.contains("down"))) {
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 1f, mainSides.contains("up") ? 12.5f : 3.5f, 8f, 2, 7, 2, 0, 0, 2, 5);
+            drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 4.5f, mainSides.contains("up") ? 15f : 1f, 8f, 5, 2, 2, 0, 0, 5, 2);
         }
     }
 
@@ -157,14 +215,6 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
             buffer.vertex(matrix4f, sX + pX, sY + pY, sZ + pZ).color(color).uv(u2, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();
             buffer.vertex(matrix4f, -sX + pX, sY + pY, sZ + pZ).color(color).uv(u2, v2).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();
         }
-
-
-        /*
-        buffer.vertex(matrix4f, pX, -pY, pZ).cocolor).uv(u1, v2).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();
-        buffer.vertex(matrix4f, pX, pY, pZ).cocolor).uv(u1, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();
-        buffer.vertex(matrix4f, pX, pY, -pZ).cocolor).uv(u2, v1).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();
-        buffer.vertex(matrix4f, pX, -pY, -pZ).cocolor).uv(u2, v2).overlayCoords(OverlayTexture.NO_OVERLAY).uv2(0xF000F0).normal(0f, 1f, 0f).endVertex();
-        */
         stack.popPose();
     }
 

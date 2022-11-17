@@ -13,13 +13,16 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.PoweredBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
@@ -33,10 +36,9 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class WireBlock extends BaseEntityBlock {
+    public static final IntegerProperty POWER = BlockStateProperties.POWER;
     protected static final VoxelShape SHAPE_DOWN = Block.box(0, 0, 0, 16, 2, 16);
     protected static final VoxelShape SHAPE_UP = Block.box(0, 14, 0, 16, 16, 16);
     protected static final VoxelShape SHAPE_NORTH = Block.box(0, 0, 0, 16, 16, 2);
@@ -49,6 +51,8 @@ public class WireBlock extends BaseEntityBlock {
     public WireBlock(RegistryObject<BlockEntityType<WireBlockEntity>> registryObject) {
         super(Properties.of(Material.STONE).noOcclusion().noCollission());
         this.registryObject = registryObject;
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(POWER, 0));
     }
 
     @SuppressWarnings("deprecation")
@@ -88,7 +92,15 @@ public class WireBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos fromPos, boolean moving) {
+       if (level.getBlockState(fromPos).isSignalSource()) {
+           level.setBlockAndUpdate(pos, level.getBlockState(pos).setValue(POWER, level.getBlockState(fromPos).getSignal(level, fromPos, Direction.NORTH)));
+       }
         super.neighborChanged(state, level, pos, block, fromPos, moving);
+    }
+
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
+        pBuilder.add(POWER);
     }
 
     @Override
