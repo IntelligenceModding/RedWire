@@ -22,6 +22,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Material;
@@ -38,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 public class WireBlock extends BaseEntityBlock {
-    public static final IntegerProperty POWER = BlockStateProperties.POWER;
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     protected static final VoxelShape SHAPE_DOWN = Block.box(0, 0, 0, 16, 2, 16);
     protected static final VoxelShape SHAPE_UP = Block.box(0, 14, 0, 16, 16, 16);
     protected static final VoxelShape SHAPE_NORTH = Block.box(0, 0, 0, 16, 16, 2);
@@ -52,7 +53,7 @@ public class WireBlock extends BaseEntityBlock {
         super(Properties.of(Material.STONE).noOcclusion().noCollission());
         this.registryObject = registryObject;
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(POWER, 0));
+                .setValue(POWERED, false));
     }
 
     @SuppressWarnings("deprecation")
@@ -92,15 +93,37 @@ public class WireBlock extends BaseEntityBlock {
     @SuppressWarnings("deprecation")
     @Override
     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos fromPos, boolean moving) {
-       if (level.getBlockState(fromPos).isSignalSource()) {
-           level.setBlockAndUpdate(pos, level.getBlockState(pos).setValue(POWER, level.getBlockState(fromPos).getSignal(level, fromPos, Direction.NORTH)));
-       }
+
+        System.out.println(pos); // Wire Block
+        System.out.println(fromPos); // Geänderter / Platzierter Block
+
+        BlockState wireBlockState = level.getBlockState(pos);
+        BlockState placedBlockState = level.getBlockState(fromPos);
+
+        if (!wireBlockState.getValue(POWERED)) {
+
+
+
+            System.out.println(placedBlockState.isSignalSource());
+            System.out.println(placedBlockState);
+            if (level.hasSignal(fromPos, Direction.DOWN)) {
+                level.setBlock(pos, wireBlockState.setValue(POWERED, true), 3);
+            }
+        }
+
+
         super.neighborChanged(state, level, pos, block, fromPos, moving);
+    }
+
+    @SuppressWarnings("deprecation")
+    @Override
+    public int getSignal(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos, @NotNull Direction pDirection) {
+        return pState.getValue(POWERED) ? 15 : 0;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(POWER);
+        pBuilder.add(POWERED);
     }
 
     @Override

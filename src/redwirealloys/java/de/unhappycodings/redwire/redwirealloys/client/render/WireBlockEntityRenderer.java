@@ -25,6 +25,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -51,8 +52,10 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
         ArrayList<String> sides = WireBlockItem.getSides(entity.getSides());
         VertexConsumer boxVertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(TextureAtlas.LOCATION_BLOCKS));
         Direction[] directions = {Direction.UP, Direction.DOWN, Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
-
         int power = 0;
+        BlockState state = entity.getLevel().getBlockState(entity.getBlockPos());
+        if (state.is(ModBlocks.RED_ALLOY_WIRE.get()) && entity.getLevel().getBlockState(entity.getBlockPos()).getValue(BlockStateProperties.POWERED))
+            power = 7;
 
         for (Direction direction : directions) {
             if (sides.contains("down")) {
