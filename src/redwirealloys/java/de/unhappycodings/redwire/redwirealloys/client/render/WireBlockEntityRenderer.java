@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.BlockSource;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -94,6 +95,21 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
         if (currentBlockState.is(ModBlocks.RED_ALLOY_WIRE.get())) {
             currentSides = WireBlockItem.getSides(((WireBlockEntity) entity.getLevel().getBlockEntity(entity.getBlockPos().relative(direction))).getSides());
         }
+        // Get Connectability for edges
+        BlockPos pos = entity.getBlockPos();
+        BlockPos[] positions = {pos.north(), pos.east(), pos.south(), pos.west()};
+        Direction[] directions = {Direction.SOUTH, Direction.WEST, Direction.NORTH, Direction.EAST};
+        ArrayList<String> edges = new ArrayList<>();
+        for (int i = 0; i < positions.length; i++) {
+            BlockPos position = positions[i];
+            boolean isThere = entity.getLevel().getBlockState(position.below()).is(ModBlocks.RED_ALLOY_WIRE.get());
+            boolean isOccupied = !entity.getLevel().getBlockState(position).isAir();
+            if (isThere && !isOccupied) {
+                edges.add(directions[i].getName());
+            }
+        }
+
+        // Connections to nearby blocks
         if (currentBlockState.canRedstoneConnectTo(entity.getLevel(), entity.getBlockPos(), direction) && (!currentSides.isEmpty() && currentSides.contains(side))) {
             if (side.contains("up") || side.contains("down")) {
                 if (direction == Direction.NORTH) drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 8, side.contains("up") ? 15f : 1f, 3.5f, 2, 2, 7, 0, 0, 7, 2);
@@ -115,6 +131,7 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
             }
         }
 
+        // Connections inside one Block
         if (mainSides.contains("west") && mainSides.contains("south")) {
             drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 1f, 8, 12.5f, 2, 2, 7, 0, 0, 7, 2);
             drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 4.5f, 8, 15f, 5, 2, 2, 0, 0, 2, 7);
@@ -147,6 +164,7 @@ public class WireBlockEntityRenderer<T extends BlockEntity> implements BlockEnti
             drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 1f, mainSides.contains("up") ? 12.5f : 3.5f, 8f, 2, 7, 2, 0, 0, 2, 5);
             drawBox(stack, buffer, getColorForPower(power), new ResourceLocation(RedwireAlloys.MOD_ID, "block/wire"), 4.5f, mainSides.contains("up") ? 15f : 1f, 8f, 5, 2, 2, 0, 0, 5, 2);
         }
+
     }
 
     public static void drawBox(PoseStack stack, VertexConsumer buffer, int color, ResourceLocation texture, float pX, float pY, float pZ, float sX, float sY, float sZ, float pUOffset, float pVOffset, float pWidth, float pHeight) {

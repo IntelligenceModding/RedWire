@@ -94,25 +94,31 @@ public class WireBlock extends BaseEntityBlock {
     @Override
     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos fromPos, boolean moving) {
 
-        System.out.println(pos); // Wire Block
-        System.out.println(fromPos); // Geänderter / Platzierter Block
+        System.out.println(pos);
+        // Wire Block
+        System.out.println(fromPos);
+        // Geänderter / Platzierter Block
 
         BlockState wireBlockState = level.getBlockState(pos);
+        // Wire Block
         BlockState placedBlockState = level.getBlockState(fromPos);
+        // Geänderter / Platzierter Block
 
-        if (!wireBlockState.getValue(POWERED)) {
-
-
-
-            System.out.println(placedBlockState.isSignalSource());
-            System.out.println(placedBlockState);
-            if (level.hasSignal(fromPos, Direction.DOWN)) {
-                level.setBlock(pos, wireBlockState.setValue(POWERED, true), 3);
+        Direction targetDirection = Direction.DOWN;
+        for (Direction direction : Direction.values()) {
+            if (pos.relative(direction).equals(fromPos)) {
+                targetDirection = direction.getOpposite();
+                break;
             }
         }
 
+        level.setBlock(pos, wireBlockState.setValue(POWERED, level.hasSignal(fromPos, targetDirection)), 3);
 
         super.neighborChanged(state, level, pos, block, fromPos, moving);
+    }
+
+    public boolean isPowered(BlockState state) {
+        return state.getValue(POWERED);
     }
 
     @SuppressWarnings("deprecation")
