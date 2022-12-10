@@ -1,8 +1,6 @@
 package de.unhappycodings.redwire.redwiredoors.common.block;
 
-import de.unhappycodings.redwire.redwiredoors.RedwireDoors;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.PlayerSensorEntity;
-import de.unhappycodings.redwire.redwiredoors.common.util.TextComponentUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -30,19 +28,17 @@ import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.util.List;
 
 public class PlayerSensorBlock extends BaseEntityBlock {
     public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-    public RegistryObject<BlockEntityType<PlayerSensorEntity>> registryObject;
-
     protected static final VoxelShape NORTH = Block.box(4.5, 0, 15.4, 11.5, 1.25, 16);
     protected static final VoxelShape EAST = Block.box(0, 0, 4.5, 0.6, 1.25, 11.5);
     protected static final VoxelShape SOUTH = Block.box(4.5, 0, 0, 11.5, 1.25, 0.6);
     protected static final VoxelShape WEST = Block.box(15.4, 0, 4.5, 16, 1.25, 11.5);
+    public RegistryObject<BlockEntityType<PlayerSensorEntity>> registryObject;
 
     public PlayerSensorBlock(RegistryObject<BlockEntityType<PlayerSensorEntity>> registryObject) {
         super(Properties.of(Material.STONE));

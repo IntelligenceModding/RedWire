@@ -60,7 +60,7 @@ public class WireBlockEntity extends BlockEntity {
         nbt.putByte("sides", this.sides);
         return nbt;
     }
-    
+
     @Nullable
     @Override
     public ClientboundBlockEntityDataPacket getUpdatePacket() {

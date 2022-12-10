@@ -5,7 +5,6 @@ import de.unhappycodings.redwire.common.block.WirelessControllerBlock;
 import de.unhappycodings.redwire.common.blockentity.WirelessControllerEntity;
 import de.unhappycodings.redwire.common.config.CommonConfig;
 import de.unhappycodings.redwire.common.registration.Registration;
-import de.unhappycodings.redwire.common.util.ItemUtil;
 import de.unhappycodings.redwire.common.util.NbtUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -30,11 +29,9 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.awt.*;
 import java.util.List;
 
 public class LinkingCardItem extends Item {
@@ -81,7 +78,6 @@ public class LinkingCardItem extends Item {
         TagKey<Block> lampControllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwirelampsandlighting:lamps/controllable"));
         TagKey<Block> doorControllables = TagKey.create(Registration.BLOCKS.getRegistryKey(), new ResourceLocation("redwiredoors:doors/controllable"));
 
-        System.out.println(level.getBlockState(pos).is(doorControllables));
         if (level.getBlockState(pos).is(lampControllables) || level.getBlockState(pos).is(doorControllables)) {
             ListTag nbtList = new ListTag();
             if (item.getOrCreateTag().contains("positions"))

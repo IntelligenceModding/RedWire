@@ -117,20 +117,20 @@ public class BigSlidingDoorEntity extends BlockEntity implements IAnimatable, An
         this.last = last;
     }
 
-    public void setStyle(byte style) {
-        this.style = style;
-    }
-
     public byte getStyle() {
         return style;
     }
 
-    public void setOperable(boolean operable) {
-        this.operable = operable;
+    public void setStyle(byte style) {
+        this.style = style;
     }
 
     public boolean isOperable() {
         return operable;
+    }
+
+    public void setOperable(boolean operable) {
+        this.operable = operable;
     }
 
     private <ENTITY extends IAnimatable> void soundListener(SoundKeyframeEvent<ENTITY> event) {

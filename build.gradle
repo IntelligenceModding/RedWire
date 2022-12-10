@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url = 'https://maven.minecraftforge.net'}
+        maven { url = 'https://maven.minecraftforge.net' }
         maven { url = 'https://maven.parchmentmc.org' }
         mavenCentral()
     }
@@ -229,7 +229,7 @@ task redwirelampsandlightingJar(type: Jar) {
     archiveClassifier.set("redwirelampsandlighting")
     manifest.attributes(getManifest("RedWireLampsAndLighting"))
     from sourceSets.redwirelampsandlighting.output
-    afterEvaluate { finalizedBy reobfRedwirelampsandlightingJar}
+    afterEvaluate { finalizedBy reobfRedwirelampsandlightingJar }
 }
 
 task redwiredoorsJar(type: Jar) {
@@ -238,7 +238,7 @@ task redwiredoorsJar(type: Jar) {
     archiveClassifier.set("redwiredoors")
     manifest.attributes(getManifest("RedWireDoors"))
     from sourceSets.redwiredoors.output
-    afterEvaluate { finalizedBy reobfRedwiredoorsJar}
+    afterEvaluate { finalizedBy reobfRedwiredoorsJar }
 }
 
 task redwirealloysJar(type: Jar) {
@@ -247,14 +247,14 @@ task redwirealloysJar(type: Jar) {
     archiveClassifier.set("redwirealloys")
     manifest.attributes(getManifest("RedWireAlloys"))
     from sourceSets.redwirealloys.output
-    afterEvaluate { finalizedBy reobfRedwirealloysJar}
+    afterEvaluate { finalizedBy reobfRedwirealloysJar }
 }
 
 reobf {
-    jar {classpath.from(sourceSets.main.compileClasspath)}
-    redwirelampsandlightingJar {classpath.from(sourceSets.redwirelampsandlighting.compileClasspath)}
-    redwiredoorsJar {classpath.from(sourceSets.redwiredoors.compileClasspath)}
-    redwirealloysJar {classpath.from(sourceSets.redwirealloys.compileClasspath)}
+    jar { classpath.from(sourceSets.main.compileClasspath) }
+    redwirelampsandlightingJar { classpath.from(sourceSets.redwirelampsandlighting.compileClasspath) }
+    redwiredoorsJar { classpath.from(sourceSets.redwiredoors.compileClasspath) }
+    redwirealloysJar { classpath.from(sourceSets.redwirealloys.compileClasspath) }
 }
 
 artifacts {

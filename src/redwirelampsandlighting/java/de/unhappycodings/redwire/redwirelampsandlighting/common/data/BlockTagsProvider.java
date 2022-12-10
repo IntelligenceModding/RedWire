@@ -1,6 +1,5 @@
 package de.unhappycodings.redwire.redwirelampsandlighting.common.data;
 
-import de.unhappycodings.redwire.redwirelampsandlighting.common.block.ModBlocks;
 import de.unhappycodings.redwire.redwirelampsandlighting.common.registration.Registration;
 import de.unhappycodings.redwire.redwirelampsandlighting.common.util.ItemUtil;
 import net.minecraft.data.DataGenerator;
@@ -22,7 +21,6 @@ public class BlockTagsProvider extends net.minecraft.data.tags.BlockTagsProvider
     @Override
     protected void addTags() {
         Registration.BLOCKS.getEntries().stream().map(RegistryObject::get).forEach((block) -> {
-            System.out.println(ItemUtil.getRegString(block));
             if (ItemUtil.getRegString(block).contains("lamp") && !ItemUtil.getRegString(block).contains("static")) {
                 tag(LAMPS_CONTROLLABLE).add(block);
             }

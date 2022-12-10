@@ -3,7 +3,6 @@ package de.unhappycodings.redwire.redwiredoors.common.block;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.BigSlidingDoorEntity;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.BoundingBlockEntity;
 import de.unhappycodings.redwire.redwiredoors.common.blockentity.ModBlockEntities;
-import de.unhappycodings.redwire.redwiredoors.common.util.LocationUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;

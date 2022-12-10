@@ -3,7 +3,6 @@ package de.unhappycodings.redwire.common.block;
 import de.unhappycodings.redwire.common.blockentity.ModBlockEntities;
 import de.unhappycodings.redwire.common.blockentity.WirelessControllerEntity;
 import de.unhappycodings.redwire.common.item.LinkingCardItem;
-import de.unhappycodings.redwire.common.util.TextComponentUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -43,6 +42,21 @@ public class WirelessControllerBlock extends BaseEntityBlock {
     protected WirelessControllerBlock() {
         super(Properties.copy(Blocks.STONE));
         registerDefaultState(this.getStateDefinition().any().setValue(BlockStateProperties.POWERED, false));
+
+    }
+
+    private static void spawnParticles(Level p_55455_, BlockPos p_55456_) {
+        RandomSource randomsource = p_55455_.random;
+        for (Direction direction : Direction.values()) {
+            BlockPos blockpos = p_55456_.relative(direction);
+            if (!p_55455_.getBlockState(blockpos).isSolidRender(p_55455_, blockpos)) {
+                Direction.Axis direction$axis = direction.getAxis();
+                double d1 = direction$axis == Direction.Axis.X ? 0.5D + 0.5625D * (double) direction.getStepX() : (double) randomsource.nextFloat();
+                double d2 = direction$axis == Direction.Axis.Y ? 0.5D + 0.5625D * (double) direction.getStepY() : (double) randomsource.nextFloat();
+                double d3 = direction$axis == Direction.Axis.Z ? 0.5D + 0.5625D * (double) direction.getStepZ() : (double) randomsource.nextFloat();
+                p_55455_.addParticle(DustParticleOptions.REDSTONE, (double) p_55456_.getX() + d1, (double) p_55456_.getY() + d2, (double) p_55456_.getZ() + d3, 0.0D, 0.0D, 0.0D);
+            }
+        }
 
     }
 
@@ -105,21 +119,6 @@ public class WirelessControllerBlock extends BaseEntityBlock {
     public void animateTick(@NotNull BlockState blockState, @NotNull Level level, @NotNull BlockPos blockPos, @NotNull RandomSource randomSource) {
         if (blockState.getValue(BlockStateProperties.POWERED))
             spawnParticles(level, blockPos);
-    }
-
-    private static void spawnParticles(Level p_55455_, BlockPos p_55456_) {
-        RandomSource randomsource = p_55455_.random;
-        for(Direction direction : Direction.values()) {
-            BlockPos blockpos = p_55456_.relative(direction);
-            if (!p_55455_.getBlockState(blockpos).isSolidRender(p_55455_, blockpos)) {
-                Direction.Axis direction$axis = direction.getAxis();
-                double d1 = direction$axis == Direction.Axis.X ? 0.5D + 0.5625D * (double)direction.getStepX() : (double)randomsource.nextFloat();
-                double d2 = direction$axis == Direction.Axis.Y ? 0.5D + 0.5625D * (double)direction.getStepY() : (double)randomsource.nextFloat();
-                double d3 = direction$axis == Direction.Axis.Z ? 0.5D + 0.5625D * (double)direction.getStepZ() : (double)randomsource.nextFloat();
-                p_55455_.addParticle(DustParticleOptions.REDSTONE, (double)p_55456_.getX() + d1, (double)p_55456_.getY() + d2, (double)p_55456_.getZ() + d3, 0.0D, 0.0D, 0.0D);
-            }
-        }
-
     }
 
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, @NotNull BlockState blockState, @NotNull BlockEntityType<T> type) {

@@ -16,7 +16,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.PoweredBlock;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -39,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 
 public class WireBlock extends BaseEntityBlock {
-    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    public static final IntegerProperty POWER = IntegerProperty.create("power", 0, 150);
     protected static final VoxelShape SHAPE_DOWN = Block.box(0, 0, 0, 16, 2, 16);
     protected static final VoxelShape SHAPE_UP = Block.box(0, 14, 0, 16, 16, 16);
     protected static final VoxelShape SHAPE_NORTH = Block.box(0, 0, 0, 16, 16, 2);
@@ -53,7 +53,7 @@ public class WireBlock extends BaseEntityBlock {
         super(Properties.of(Material.STONE).noOcclusion().noCollission());
         this.registryObject = registryObject;
         this.registerDefaultState(this.stateDefinition.any()
-                .setValue(POWERED, false));
+                .setValue(POWER, 0));
     }
 
     @SuppressWarnings("deprecation")
@@ -94,42 +94,97 @@ public class WireBlock extends BaseEntityBlock {
     @Override
     public void neighborChanged(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Block block, @NotNull BlockPos fromPos, boolean moving) {
 
-        System.out.println(pos);
-        // Wire Block
-        System.out.println(fromPos);
-        // Geänderter / Platzierter Block
-
         BlockState wireBlockState = level.getBlockState(pos);
         // Wire Block
         BlockState placedBlockState = level.getBlockState(fromPos);
         // Geänderter / Platzierter Block
 
-        Direction targetDirection = Direction.DOWN;
-        for (Direction direction : Direction.values()) {
+        Direction targetDirection = null; // Default value
+        Direction[] directions = Direction.values();
+        for (Direction direction : directions) {
             if (pos.relative(direction).equals(fromPos)) {
                 targetDirection = direction.getOpposite();
                 break;
             }
         }
 
-        level.setBlock(pos, wireBlockState.setValue(POWERED, level.hasSignal(fromPos, targetDirection)), 3);
+        if (targetDirection != null) {
+            BlockState targetState = level.getBlockState(fromPos);
+            if (targetState.is(Blocks.AIR)) return;
+
+            int power = getStrongestPowerSignal(fromPos, level);
+            int currentPower = state.getValue(POWER);
+            if (state.getValue(POWER) == 0 && power <= 15) power = power * 10 + 1;
+            if (power > currentPower) {
+                level.setBlock(pos, state.setValue(POWER, power - 1), 3);
+            } else {
+                level.setBlock(fromPos, state.setValue(POWER, currentPower - 1), 3);
+            }
+
+        }
 
         super.neighborChanged(state, level, pos, block, fromPos, moving);
     }
 
-    public boolean isPowered(BlockState state) {
-        return state.getValue(POWERED);
+    public int getBestNeighborSignal(BlockPos pPos, Level level) {
+        int i = 0;
+        for(Direction direction : Direction.values()) {
+            BlockPos pos = pPos.relative(direction);
+            int j = this.getSignal(level.getBlockState(pos), level, pPos, direction);
+            if (j >= 150) {
+                return 150;
+            }
+            if (j > i) {
+                i = j;
+            }
+        }
+        return i;
+    }
+
+    private int calculateTargetStrength(Level pLevel, BlockPos pPos) {
+        int i = getBestNeighborSignal(pPos, pLevel);
+        int j = 0;
+        if (i < 150) {
+            for(Direction direction : Direction.Plane.HORIZONTAL) {
+                BlockPos blockpos = pPos.relative(direction);
+                BlockState blockstate = pLevel.getBlockState(blockpos);
+                j = Math.max(j, this.getWireSignal(blockstate));
+                BlockPos blockpos1 = pPos.above();
+                if (blockstate.isRedstoneConductor(pLevel, blockpos) && !pLevel.getBlockState(blockpos1).isRedstoneConductor(pLevel, blockpos1)) {
+                    j = Math.max(j, this.getWireSignal(pLevel.getBlockState(blockpos.above())));
+                } else if (!blockstate.isRedstoneConductor(pLevel, blockpos)) {
+                    j = Math.max(j, this.getWireSignal(pLevel.getBlockState(blockpos.below())));
+                }
+            }
+        }
+
+        return Math.max(i, j - 1);
+    }
+
+    private int getWireSignal(BlockState pState) {
+        return pState.is(this) ? pState.getValue(POWER) : pState.hasProperty(BlockStateProperties.POWER) ? pState.getValue(BlockStateProperties.POWER) : 0;
+    }
+
+    public int getStrongestPowerSignal(BlockPos pos, Level level) {
+        int power = 0;
+        Direction[] directions = Direction.values();
+        for (Direction direction : directions) {
+            if (level.getSignal(pos, direction) > power) {
+                power = level.getSignal(pos, direction);
+            }
+        }
+        return power;
     }
 
     @SuppressWarnings("deprecation")
     @Override
     public int getSignal(@NotNull BlockState pState, @NotNull BlockGetter pLevel, @NotNull BlockPos pPos, @NotNull Direction pDirection) {
-        return pState.getValue(POWERED) ? 15 : 0;
+        return pState.hasProperty(POWER) ? pState.getValue(POWER) : pState.hasProperty(BlockStateProperties.POWER) ? pState.getValue(BlockStateProperties.POWER) : 0;
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
-        pBuilder.add(POWERED);
+        pBuilder.add(POWER);
     }
 
     @Override

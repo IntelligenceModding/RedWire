@@ -21,6 +21,15 @@ public class ModelAndBlockstateProvider extends BlockStateProvider {
         super(gen, modid, exFileHelper);
     }
 
+    private static int getRotation(Direction facing) {
+        return switch (facing) {
+            case EAST -> 90;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            default -> 0;
+        };
+    }
+
     @Override
     protected void registerStatesAndModels() {
         wallLampBlock(ModBlocks.WHITE_WALL_LAMP.get());
@@ -243,15 +252,6 @@ public class ModelAndBlockstateProvider extends BlockStateProvider {
             Direction facing = state.getValue(LampWallBlock.FACING);
             return ConfiguredModel.builder().modelFile(state.getValue(LampWallBlock.LIT) ? on : off).rotationY(getRotation(facing)).build();
         });
-    }
-
-    private static int getRotation(Direction facing) {
-        return switch (facing) {
-            case EAST -> 90;
-            case SOUTH -> 180;
-            case WEST -> 270;
-            default -> 0;
-        };
     }
 
 }

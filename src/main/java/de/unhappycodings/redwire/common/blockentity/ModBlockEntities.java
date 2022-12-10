@@ -11,11 +11,11 @@ public class ModBlockEntities {
 
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, RedwireCore.MOD_ID);
 
-    public static final RegistryObject<BlockEntityType<WirelessControllerEntity>> WIRELESS_CONTROLLER =
+    private ModBlockEntities() {
+    }    public static final RegistryObject<BlockEntityType<WirelessControllerEntity>> WIRELESS_CONTROLLER =
             BLOCK_ENTITIES.register("wireless_controller", () ->
                     BlockEntityType.Builder.of(WirelessControllerEntity::new, ModBlocks.WIRELESS_CONTROLLER.get()).build(null));
 
-    private ModBlockEntities() {
-    }
+
 
 }

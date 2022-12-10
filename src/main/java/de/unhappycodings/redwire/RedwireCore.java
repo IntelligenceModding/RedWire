@@ -21,9 +21,8 @@ public class RedwireCore {
     public static final int MOD_COLOR = 0x00b497;
     public static final int MOD_COLOR_SUB = 0x13C6A6;
     public static final String MOD_ID = "redwirecore";
-    private static final Logger LOGGER = LogUtils.getLogger();
-
     public static final CreativeModeTab creativeTab = new ItemCreativeTab();
+    private static final Logger LOGGER = LogUtils.getLogger();
 
     public RedwireCore() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();

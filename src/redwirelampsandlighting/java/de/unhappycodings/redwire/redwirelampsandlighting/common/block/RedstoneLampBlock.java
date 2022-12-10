@@ -2,7 +2,6 @@ package de.unhappycodings.redwire.redwirelampsandlighting.common.block;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.item.ItemStack;
@@ -14,7 +13,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.AttachFace;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import org.jetbrains.annotations.NotNull;
@@ -42,6 +40,7 @@ public class RedstoneLampBlock extends net.minecraft.world.level.block.RedstoneL
     private static ToIntFunction<BlockState> poweredBlockEmission(boolean inverted) {
         return (p_50763_) -> p_50763_.getValue(BlockStateProperties.LIT) ? 15 : 0;
     }
+
     @Nullable
     @Override
     public BlockState getStateForPlacement(@NotNull BlockPlaceContext context) {

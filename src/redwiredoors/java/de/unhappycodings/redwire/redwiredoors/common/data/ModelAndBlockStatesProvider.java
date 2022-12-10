@@ -7,7 +7,7 @@ import de.unhappycodings.redwire.redwiredoors.common.util.ItemUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
@@ -19,6 +19,15 @@ public class ModelAndBlockStatesProvider extends BlockStateProvider {
     public ModelAndBlockStatesProvider(DataGenerator gen, ExistingFileHelper exFileHelper) {
         super(gen, RedwireDoors.MOD_ID, exFileHelper);
         this.gen = gen;
+    }
+
+    private static int getSensorRotation(Direction facing) {
+        return switch (facing) {
+            case EAST -> 90;
+            case SOUTH -> 180;
+            case WEST -> 270;
+            default -> 0;
+        };
     }
 
     @Override
@@ -54,15 +63,6 @@ public class ModelAndBlockStatesProvider extends BlockStateProvider {
                     .rotationY(getSensorRotation(facing))
                     .build();
         });
-    }
-
-    private static int getSensorRotation(Direction facing) {
-        return switch (facing) {
-            case EAST -> 90;
-            case SOUTH -> 180;
-            case WEST -> 270;
-            default -> 0;
-        };
     }
 
     public void bigSlidingDoorBlock(Block block, ResourceLocation texture) {

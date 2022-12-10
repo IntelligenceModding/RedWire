@@ -13,12 +13,10 @@ import java.util.function.Supplier;
 
 public class ModBlocks {
 
-    public static final RegistryObject<WireBlock> RED_ALLOY_WIRE = register("red_alloy_wire",
-            () -> new WireBlock(ModBlockEntities.RED_ALLOY_WIRE), () -> new WireBlockItem(ModBlocks.RED_ALLOY_WIRE.get()));
-
     private ModBlocks() {
         throw new IllegalStateException("ModBlocks class");
-    }
+    }    public static final RegistryObject<WireBlock> RED_ALLOY_WIRE = register("red_alloy_wire",
+            () -> new WireBlock(ModBlockEntities.RED_ALLOY_WIRE), () -> new WireBlockItem(ModBlocks.RED_ALLOY_WIRE.get()));
 
     public static void register() {
     }
@@ -44,5 +42,7 @@ public class ModBlocks {
         Registration.ITEMS.register(name, blockItem);
         return registryObject;
     }
+
+
 
 }

@@ -1,9 +1,7 @@
 package de.unhappycodings.redwire.redwirealloys.common.item;
 
-import de.unhappycodings.redwire.redwirealloys.common.block.ModBlocks;
 import de.unhappycodings.redwire.redwirealloys.common.blockentity.WireBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -14,8 +12,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -30,34 +26,6 @@ public class WireBlockItem extends BlockItem {
 
     public WireBlockItem(Block pBlock) {
         super(pBlock, new Properties());
-    }
-
-    @NotNull
-    @Override
-    public InteractionResult place(@NotNull BlockPlaceContext context) {
-        super.place(context);
-
-        if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof WireBlockEntity entity) { // Prevent Air
-            String side = context.getClickedFace().getOpposite().getName();
-            BlockPos pos = context.getClickedPos();
-            Player player = context.getPlayer();
-            Level level = context.getLevel();
-            byte sides = entity.getSides();
-            if (!getSides(sides).contains(side)) {
-                if (!context.getLevel().isClientSide) {
-                    entity.setSides((byte) (sides + getSideValue(side)));
-                    entity.setChanged();
-                    ItemStack playerItem = player.getItemInHand(InteractionHand.MAIN_HAND);
-                    if (!player.isCreative())
-                        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(playerItem.getItem(), playerItem.getCount() -1));
-                    level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), Block.UPDATE_ALL);
-                }
-                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f, false);
-                player.swing(InteractionHand.MAIN_HAND);
-            }
-            return InteractionResult.CONSUME;
-        }
-        return InteractionResult.CONSUME;
     }
 
     public static ArrayList<String> getSides(byte sideValue) {
@@ -87,6 +55,33 @@ public class WireBlockItem extends BlockItem {
             case "south" -> SOUTH;
             default -> WEST;
         };
+    }
+
+    @NotNull
+    @Override
+    public InteractionResult place(@NotNull BlockPlaceContext context) {
+        super.place(context);
+        if (context.getLevel().getBlockEntity(context.getClickedPos()) instanceof WireBlockEntity entity) { // Prevent Air
+            String side = context.getClickedFace().getOpposite().getName();
+            BlockPos pos = context.getClickedPos();
+            Player player = context.getPlayer();
+            Level level = context.getLevel();
+            byte sides = entity.getSides();
+            if (!getSides(sides).contains(side)) {
+                if (!context.getLevel().isClientSide) {
+                    entity.setSides((byte) (sides + getSideValue(side)));
+                    entity.setChanged();
+                    ItemStack playerItem = player.getItemInHand(InteractionHand.MAIN_HAND);
+                    if (!player.isCreative())
+                        player.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(playerItem.getItem(), playerItem.getCount() - 1));
+                    level.sendBlockUpdated(pos, level.getBlockState(pos), level.getBlockState(pos), Block.UPDATE_ALL);
+                }
+                level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.STONE_PLACE, SoundSource.BLOCKS, 1.0f, 1.0f, false);
+                player.swing(InteractionHand.MAIN_HAND);
+            }
+            return InteractionResult.CONSUME;
+        }
+        return InteractionResult.CONSUME;
     }
 
 }
